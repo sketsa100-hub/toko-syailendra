@@ -1,0 +1,2175 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth w-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Syailendra - High-Performance Official Storefront</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Russo+One&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fffeb3',
+                            100: '#fffb66',
+                            500: '#d97706',
+                            600: '#b45309',
+                            800: '#78350f',
+                            900: '#1e1b4b',
+                        },
+                        shopee: '#ee4d2d',
+                        lazada: '#0f146d',
+                        tokopedia: '#03ac0e',
+                        tiktok: '#000000'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Share Tech Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        :root { 
+            --titanium-light: #ffffff;
+            --titanium-base: #cbd5e1;
+            --titanium-dark: #1e293b;
+            --copper-glow: #fb923c;
+            --copper-dark: #7c2d12;
+            --deep-black: #020617;
+            --gold-rim: #d4af37; 
+        }
+
+        html, body { 
+            width: 100% !important; 
+            max-width: 100% !important;
+            margin: 0 !important; 
+            padding: 0 !important;
+            background-color: #020617; 
+            font-family: 'Inter', sans-serif; 
+            color: #1e293b; 
+            overflow-x: hidden;
+            font-size: 1.1rem;
+        }
+
+        /* HEADER TITANIUM FIXED — permukaan metal berlapis dengan efek 3D */
+        .titanium-header-bar {
+            background:
+                linear-gradient(180deg, rgba(255,255,255,.98) 0%, rgba(226,232,240,.96) 13%, rgba(148,163,184,.98) 36%, rgba(248,250,252,.98) 48%, rgba(100,116,139,.98) 70%, rgba(226,232,240,.98) 84%, rgba(51,65,85,1) 100%);
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 15px 22px;
+            border-top: 2px solid #fff;
+            border-bottom: 4px solid #0f172a;
+            box-shadow: 0 2px 0 rgba(255,255,255,.75) inset, 0 -2px 0 rgba(15,23,42,.25) inset, 0 5px 0 rgba(30,41,59,.75), 0 12px 24px -5px rgba(0,0,0,.58);
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 12px; width: 100%; box-sizing: border-box;
+        }
+        /* Bingkai timbul: tidak memakai transform agar posisi header tetap stabil */
+        .titanium-header-bar > div { position: relative; z-index: 1; }
+        .titanium-header-bar > div:first-child { gap: 12px !important; }
+        .titanium-header-bar .analog-clock-mini { width: 46px; height: 46px; border-width: 3px; box-shadow: 0 0 0 2px rgba(15,23,42,.55), 0 4px 7px rgba(0,0,0,.55), inset 0 2px 4px rgba(255,255,255,.35); }
+        .titanium-header-bar .analog-clock-mini .hour-mini { height: 9px; }
+        .titanium-header-bar .analog-clock-mini .min-mini { height: 13px; }
+        .titanium-header-bar > div:first-child a > div { width: 36px !important; height: 36px !important; }
+        .titanium-header-bar > div:last-child { gap: 11px !important; }
+        .titanium-header-bar #favoriteBtn { padding: 8px !important; }
+        .titanium-header-bar #favoriteBtn > i { font-size: 1rem !important; }
+        .titanium-header-bar .btn-fullscreen { transform: none; transform-origin: center; box-shadow: 0 3px 0 #475569, 0 5px 8px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.95); }
+        .header-search-row { gap: 7px; margin: 0 12px; }
+        .header-search-field input { padding-top: 9px !important; padding-bottom: 9px !important; box-shadow: inset 0 2px 5px rgba(15,23,42,.14), 0 1px 0 rgba(255,255,255,.8); }
+        .header-search-field #searchBtn { padding-top: 7px !important; padding-bottom: 7px !important; padding-left: 13px !important; padding-right: 13px !important; box-shadow: 0 3px 0 #92400e, 0 4px 7px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.45); }
+        .header-tool-btn { padding: 9px 11px; font-size: 12px; border-color: #475569; box-shadow: 0 3px 0 #64748b, 0 5px 8px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.95); }
+        .header-tool-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #64748b, inset 0 2px 4px rgba(15,23,42,.2); }
+        /* Header tidak menutupi konten; ruang mengikuti tinggi aktual */
+        body { padding-top: var(--titanium-header-space, 90px) !important; }
+        main { scroll-margin-top: calc(var(--titanium-header-space, 110px) + 12px); }
+        .header-search-row { display:flex; align-items:center; gap:8px; flex:1; min-width:0; max-width:900px; margin:0 16px; }
+        .header-search-field { position:relative; flex:1; min-width:0; }
+        .header-tool-btn { flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; gap:6px; border:1px solid #334155; border-radius:999px; padding:8px 11px; background:linear-gradient(180deg,#fff,#cbd5e1); color:#0f172a; font-size:12px; font-weight:800; box-shadow:0 2px 4px #0002; cursor:pointer; }
+        .header-tool-btn:hover { background:#fbbf24; }
+        .header-tool-btn:disabled { opacity:.6; cursor:wait; }
+        #imageSearchInput { display:none; }
+        .cart-header-btn { position:relative; }
+        .cart-count { position:absolute; top:-5px; right:-4px; min-width:17px; height:17px; padding:0 4px; border-radius:999px; display:flex; align-items:center; justify-content:center; background:#f59e0b; color:#111827; border:1px solid #fff; font-size:10px; line-height:1; font-weight:900; }
+        .cart-item-row { display:grid; grid-template-columns:64px minmax(0,1fr) auto; gap:12px; align-items:center; padding:12px 0; border-bottom:1px solid #e2e8f0; }
+        .cart-item-row img { width:64px; height:64px; object-fit:cover; border-radius:10px; border:1px solid #e2e8f0; }
+        @media (max-width:420px) { .cart-header-btn { width:30px; height:30px; padding:0; } .cart-header-btn .tool-label { display:none; } .cart-item-row { grid-template-columns:52px minmax(0,1fr) auto; gap:8px; } .cart-item-row img { width:52px; height:52px; } }
+
+        .account-wrap { position:relative; flex-shrink:0; }
+        .account-avatar-btn { width:38px; height:38px; padding:3px; border:1px solid #334155; border-radius:50%; background:linear-gradient(180deg,#fff,#cbd5e1); color:#0f172a; box-shadow:0 2px 4px #0002; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; overflow:hidden; }
+        .account-avatar-btn img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+        .account-menu { position:absolute; top:calc(100% + 9px); right:0; width:220px; z-index:1400; padding:7px; background:#fff; border:1px solid #cbd5e1; border-radius:14px; box-shadow:0 14px 35px #0f172a30; }
+        .account-menu button { display:flex; align-items:center; gap:10px; width:100%; padding:10px 11px; border-radius:9px; text-align:left; color:#1e293b; font-size:13px; font-weight:750; }
+        .account-menu button:hover { background:#fef3c7; }
+        .account-menu[hidden] { display:none !important; }
+        .account-modal { position:fixed; inset:0; z-index:1450; display:flex; align-items:center; justify-content:center; padding:14px; background:#020617cc; }
+        .account-modal[hidden] { display:none !important; }
+        .account-panel { width:min(100%,460px); max-height:90vh; overflow:auto; background:#fff; border-radius:18px; box-shadow:0 25px 70px #0005; }
+        .account-field { display:block; width:100%; border:1px solid #cbd5e1; border-radius:10px; padding:10px 12px; color:#0f172a; background:white; margin-top:5px; }
+        .account-action { border-radius:999px; padding:10px 16px; background:#f59e0b; color:#111827; font-weight:850; }
+        .account-secondary { border-radius:999px; padding:9px 14px; border:1px solid #cbd5e1; color:#334155; font-weight:750; }
+        @media(max-width:420px) { .account-avatar-btn { width:30px; height:30px; } .account-menu { right:-4px; width:205px; } }
+
+        /* FOOTER: semua teks eksplisit ikut diperkecil 20%, termasuk kelas Tailwind */
+        footer { font-size:80% !important; padding:1.9rem 1.3rem !important; }
+        footer .text-2xl { font-size:1.2rem !important; line-height:1.6rem !important; }
+        footer .text-base { font-size:.8rem !important; line-height:1.25rem !important; }
+        footer .text-sm { font-size:.7rem !important; line-height:1rem !important; }
+        footer .grid { gap:1.3rem !important; margin-bottom:1.3rem !important; }
+        footer .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top:.5rem !important; }
+        footer .space-y-2\.5 > :not([hidden]) ~ :not([hidden]) { margin-top:.4rem !important; }
+        footer .px-3 { padding-left:.6rem !important; padding-right:.6rem !important; }
+        footer .py-1 { padding-top:.2rem !important; padding-bottom:.2rem !important; }
+        footer .pt-6 { padding-top:1.2rem !important; }
+        .footer-app-download { display:flex; align-items:center; justify-content:space-between; gap:1.5rem; padding:1rem 0 1.4rem; margin:0 0 1.2rem; border-bottom:1px solid #334155; }
+        .footer-app-copy { max-width:34rem; }
+        .footer-app-assets { display:flex; align-items:center; gap:.8rem; flex-shrink:0; }
+        .footer-app-qr, .footer-app-badge { display:flex; align-items:center; justify-content:center; border:1px solid #475569; background:#fff; border-radius:9px; padding:5px; cursor:pointer; transition:transform .15s ease, border-color .15s ease; }
+        .footer-app-qr { width:76px; height:76px; }
+        .footer-app-qr img { width:100%; height:100%; object-fit:contain; }
+        .footer-app-badges { display:flex; flex-direction:column; gap:.35rem; }
+        .footer-app-badge { width:142px; height:28px; }
+        .footer-app-badge img { width:100%; height:100%; object-fit:contain; }
+        .footer-app-qr:hover, .footer-app-badge:hover { transform:translateY(-1px); border-color:#fbbf24; }
+        .footer-app-qr:focus-visible, .footer-app-badge:focus-visible { outline:2px solid #fbbf24; outline-offset:3px; }
+        @media (max-width:600px) { .footer-app-download { align-items:flex-start; flex-direction:column; } .footer-app-assets { width:100%; } .footer-app-badges { flex-direction:row; flex-wrap:wrap; } .footer-app-badge { width:120px; } }
+        .footer-follow { margin: 0 0 1.3rem; }
+        .footer-follow-links { display:flex; flex-wrap:wrap; align-items:center; gap:.65rem; }
+        .footer-follow-button { width:34px; height:34px; padding:4px; display:inline-flex; align-items:center; justify-content:center; border:1px solid #475569; border-radius:9px; background:#fff; cursor:pointer; transition:transform .15s ease, background .15s ease; }
+        .footer-follow-button:hover { background:#fef3c7; transform:translateY(-2px); }
+        .footer-follow-button:focus-visible { outline:2px solid #fbbf24; outline-offset:3px; }
+        .footer-follow-button img { display:block; width:100%; height:100%; object-fit:contain; }
+        @media (max-width: 760px) {
+            .titanium-header-bar { padding:10px 10px 12px; gap:9px; flex-wrap:wrap; border-bottom-width:4px; }
+            .titanium-header-bar > div:first-child { gap:9px !important; }
+            .titanium-header-bar .analog-clock-mini { width:36px; height:36px; }
+            .titanium-header-bar .analog-clock-mini .hour-mini { height:8px; }
+            .titanium-header-bar .analog-clock-mini .min-mini { height:11px; }
+            .titanium-header-bar > div:first-child a > div { width:32px !important; height:32px !important; }
+            .header-search-row { order:3; flex-basis:100%; max-width:none; margin:0; }
+            .header-tool-btn { padding:8px 9px; }
+            body { padding-top: var(--titanium-header-space, 130px) !important; }
+        }
+        @media (max-width: 420px) {
+            .header-tool-btn .tool-label { display:none; }
+            .header-search-row { gap:5px; }
+            .header-tool-btn { width:34px; height:34px; padding:0; }
+        }
+
+        /* 3D ANALOG CLOCK */
+        .analog-clock-mini {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #475569, #0f172a);
+            border: 3px solid var(--copper-glow); outline: 1px solid var(--copper-dark);
+            box-shadow: 0 0 12px rgba(251, 146, 60, 0.4), 2px 2px 8px rgba(0,0,0,0.8);
+            position: relative; flex-shrink: 0; overflow: hidden;
+        }
+
+        .clock-glass {
+            position: absolute; inset: 0; border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 60%, rgba(0, 0, 0, 0.4) 100%);
+            z-index: 25; pointer-events: none;
+        }
+
+        .clock-markers span { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; transform: translate(-50%, -50%); }
+        .clock-markers span::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); border-radius: 1px; }
+        .clock-markers .hour-mark::before { top: 3px; width: 2px; height: 5px; background: var(--copper-glow); }
+        .clock-markers .min-mark::before { top: 3px; width: 1px; height: 3px; background: rgba(255,255,255,0.4); }
+        .clock-center-mini { position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; background: #fff; border-radius: 50%; transform: translate(-50%, -50%); z-index: 15; }
+        .hand-mini { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; border-radius: 10px; z-index: 10; }
+        .hour-mini { width: 3px; height: 14px; background: #f8fafc; }
+        .min-mini { width: 2px; height: 20px; background: var(--copper-glow); }
+        .sec-mini { width: 1px; height: 22px; background: #ef4444; z-index: 12; }
+
+        /* BRAND TEXT */
+        /* WORDMARK 2D: teks datar, tegas, lebih besar, tanpa efek metal/3D */
+        .brand-text {
+            display:inline-block;
+            font-family: 'Russo One', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #111827;
+            background: none;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: #111827;
+            filter: none;
+            text-shadow: none;
+            text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: .015em;
+            white-space: nowrap;
+        }
+
+        /* TACTICAL FULLSCREEN BUTTON */
+        .btn-fullscreen {
+            width: 44px; height: 28px; border-radius: 3px;
+            background: linear-gradient(to bottom, #ffffff 0%, #cbd5e1 40%, #94a3b8 100%);
+            border: 1px solid #1e293b;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; color: #020617; font-size: 13px; transition: all 0.05s ease;
+        }
+        .btn-fullscreen:active { transform: translate(1px, 1px); }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* KARTU TITANIUM 3D MENGKILAT */
+        .titanium-3d-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%);
+            border-radius: 1rem;
+            position: relative;
+            border: 1px solid rgba(203, 213, 225, 0.9);
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                0 2px 4px -1px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* KARTU PRODUK: gambar tanpa bingkai, jarak antarkartu lebih rapat */
+        #productGrid { column-gap: .5rem !important; row-gap: .65rem !important; }
+        #productGrid .titanium-3d-card { min-width: 0; }
+        #productGrid .titanium-3d-card img[id^="prod-img-"] { display:block; border:0 !important; border-radius:0 !important; }
+        #productGrid .titanium-3d-card .space-y-0 > div:last-child { margin-top:0 !important; }
+        @media (min-width: 640px) {
+            #productGrid { column-gap: 1rem !important; row-gap: 1rem !important; }
+        }
+
+        .titanium-3d-card:hover, .titanium-3d-card:active {
+            transform: translateY(-4px) scale(1.02);
+            background: linear-gradient(145deg, #ffffff 0%, #fffbebe6 60%, #fef3c7 100%);
+            border-color: #f59e0b;
+            box-shadow: 
+                0 12px 25px -5px rgba(217, 119, 6, 0.35),
+                0 0 15px 2px rgba(245, 158, 11, 0.4),
+                inset 0 1px 2px rgba(255, 255, 255, 1),
+                inset 0 -2px 6px rgba(217, 119, 6, 0.2);
+        }
+
+        .titanium-3d-active {
+            background: linear-gradient(145deg, #f59e0b 0%, #d97706 70%, #b45309 100%) !important;
+            border-color: #78350f !important;
+            color: #020617 !important;
+            box-shadow: 
+                0 0 20px 4px rgba(245, 158, 11, 0.6),
+                inset 0 2px 4px rgba(255, 255, 255, 0.6),
+                inset 0 -3px 6px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        /* TULISAN SUB-KATEGORI: diperkecil 15% dari ukuran sebelumnya */
+        .subcat-text-item {
+            font-size: 0.765rem !important;
+            line-height: 1.0625rem !important;
+        }
+
+        /* KARTU KATEGORI DIPERKECIL 15%; LABEL BOLEH 2 BARIS AGAR TIDAK TERPOTONG */
+        .category-image-box { width: 68px; height: 68px; flex: 0 0 auto; }
+        .category-label { display: block; width: 100%; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; line-height: 1.2; min-height: 2.4em; }
+        @media (min-width: 640px) { .category-image-box { width: 81.6px; height: 81.6px; } }
+        @media (max-width: 640px) {
+            /* HP: 4 kartu kategori per baris, termasuk tombol Semua Sektor */
+            main > section:first-child > .flex.gap-3.items-center {
+                display: grid !important;
+                grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+                gap: 8px !important;
+                align-items: stretch !important;
+            }
+            main > section:first-child > .flex.gap-3.items-center > .bg-slate-200,
+            main > section:first-child > .flex.gap-3.items-center > .w-px {
+                display: none !important;
+            }
+            #allSectorFixedBtn {
+                width: 100% !important;
+                min-width: 0 !important;
+                padding: 7px 3px !important;
+            }
+            #categorySlider {
+                display: contents !important;
+                width: auto !important;
+                min-width: 0 !important;
+                overflow: visible !important;
+            }
+            .cat-item-card {
+                width: 100% !important;
+                min-width: 0 !important;
+                padding: 7px 3px !important;
+                box-sizing: border-box !important;
+            }
+            .cat-fixed-card { box-sizing: border-box !important; }
+            .category-image-box { width: 100% !important; height: auto !important; aspect-ratio: 1 / 1 !important; max-width: 68px; }
+            .category-label { font-size: 10px !important; line-height: 1.15 !important; min-height: 2.3em !important; overflow-wrap: anywhere !important; }
+            #scrollLeftBtn, #scrollRightBtn { display: none !important; }
+            /* HP: foto produk tetap 2 kolom */
+            #productGrid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+            main > section:first-child { padding: 12px !important; }
+            main > section:first-child h2 { font-size: 1rem !important; line-height: 1.3 !important; }
+            main > section:first-child p { font-size: .75rem !important; }
+        }
+        @media (min-width: 641px) {
+            .cat-item-card { width: calc(8.5% - 0.5rem) !important; min-width: calc(8.5% - 0.5rem) !important; }
+            .cat-fixed-card { width: calc(8.5% - 0.5rem) !important; min-width: calc(8.5% - 0.5rem) !important; }
+        }
+    
+        /* FOOTER TOKO SYAILENDRA: seluruh huruf diperkecil 20%, jarak baris tetap rapat */
+        footer.w-full.bg-slate-900 {
+            font-size: 80% !important;
+            line-height: 1.3 !important;
+            padding-top: 2rem !important;
+            padding-bottom: 2rem !important;
+        }
+        footer.w-full.bg-slate-900 .text-xl { font-size: 1rem !important; line-height: 1.25 !important; }
+        footer.w-full.bg-slate-900 h4 { font-size: .8em !important; line-height: 1.25 !important; margin-bottom: .4rem !important; }
+        footer.w-full.bg-slate-900 p { line-height: 1.3 !important; }
+        footer.w-full.bg-slate-900 .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: .35rem !important; }
+        footer.w-full.bg-slate-900 .space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: .24rem !important; }
+        footer.w-full.bg-slate-900 .gap-8 { gap: 1.25rem !important; }
+        footer.w-full.bg-slate-900 .mb-8 { margin-bottom: 1.25rem !important; }
+        footer.w-full.bg-slate-900 .gap-y-2 { row-gap: .24rem !important; }
+        footer.w-full.bg-slate-900 .mt-3 { margin-top: .35rem !important; }
+        footer.w-full.bg-slate-900 .mt-12 { margin-top: 1.75rem !important; }
+
+        /* Logo pembayaran dan pengiriman: responsif, ukuran seragam, tanpa mengubah fitur katalog */
+        footer.w-full.bg-slate-900 .footer-service-groups { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; margin-bottom: 1.5rem; }
+        footer.w-full.bg-slate-900 .footer-service-logos { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+        footer.w-full.bg-slate-900 .footer-service-logo { display: block; width: auto; height: 28px; max-width: 76px; object-fit: contain; background: #fff; border: 1px solid rgba(148,163,184,.22); border-radius: 4px; padding: 3px 5px; }
+        @media (min-width: 768px) { footer.w-full.bg-slate-900 .footer-service-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; } }
+
+
+        /* RESPONSIVE HEADER: desktop tetap satu baris, HP dua baris tanpa menutupi konten */
+        .titanium-header-bar { box-sizing:border-box; min-width:0; }
+        .titanium-header-bar > div:first-child,
+        .titanium-header-bar > div:last-child { min-width:0; flex-shrink:0; }
+        .header-search-row { min-width:0; }
+        .header-search-field { min-width:0; }
+        @media (min-width: 761px) {
+            .titanium-header-bar { flex-wrap:nowrap; align-items:center; gap:clamp(8px,1vw,14px); padding:clamp(10px,1.15vw,16px) clamp(12px,1.7vw,24px); }
+            .titanium-header-bar > div:first-child { gap:clamp(7px,1vw,12px) !important; }
+            .titanium-header-bar .analog-clock-mini { width:clamp(34px,3.2vw,46px); height:clamp(34px,3.2vw,46px); }
+            .titanium-header-bar > div:first-child a > div { width:clamp(30px,2.7vw,36px) !important; height:clamp(30px,2.7vw,36px) !important; }
+            .header-search-row { flex:1 1 420px; width:auto; max-width:900px; margin:0 clamp(4px,1vw,16px); gap:clamp(5px,.65vw,9px); }
+            .titanium-header-bar > div:last-child { gap:clamp(5px,.8vw,11px) !important; }
+            .header-tool-btn { padding:8px clamp(7px,.8vw,11px); }
+        }
+        @media (min-width:761px) and (max-width:1050px) {
+            .titanium-header-bar .header-tool-btn .tool-label { display:none; }
+            .titanium-header-bar .brand-text { font-size:clamp(12px,1.4vw,15px); }
+            .titanium-header-bar > div:first-child { gap:7px !important; }
+            .header-search-row { margin:0 4px; }
+        }
+        @media (max-width:760px) {
+            .titanium-header-bar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 10px; padding:9px 10px 11px; }
+            .titanium-header-bar > div:first-child { order:1; flex:0 1 auto; min-width:0; gap:8px !important; }
+            .titanium-header-bar > div:last-child { order:2; margin-left:auto; display:flex; align-items:center; gap:6px !important; }
+            .header-search-row { order:3; flex:0 0 100%; width:100%; max-width:none; min-width:0; margin:0; gap:6px; }
+            .header-search-field { flex:1 1 auto; width:auto; min-width:0; }
+            .header-search-field input { min-width:0; font-size:14px !important; padding-left:34px !important; padding-right:54px !important; }
+            .header-search-field #searchBtn { padding-left:10px !important; padding-right:10px !important; }
+            .header-tool-btn { flex:0 0 auto; min-width:34px; height:36px; padding:0 9px; justify-content:center; }
+            .titanium-header-bar #favoriteBtn { width:34px; height:34px; padding:0 !important; display:inline-flex; align-items:center; justify-content:center; }
+            .titanium-header-bar .btn-fullscreen { width:34px; height:34px; padding:0; display:inline-flex; align-items:center; justify-content:center; }
+            .titanium-header-bar .analog-clock-mini { width:34px; height:34px; }
+            .titanium-header-bar .analog-clock-mini .hour-mini { height:7px; }
+            .titanium-header-bar .analog-clock-mini .min-mini { height:10px; }
+            body { padding-top:var(--titanium-header-space,130px) !important; }
+        }
+        @media (max-width:420px) {
+            .titanium-header-bar { padding:8px 8px 10px; gap:7px 6px; }
+            .titanium-header-bar > div:first-child { gap:6px !important; }
+            .titanium-header-bar .analog-clock-mini { width:30px; height:30px; }
+            .titanium-header-bar > div:first-child a > div { width:29px !important; height:29px !important; }
+            .header-search-row { gap:4px; }
+            .header-tool-btn { width:32px; min-width:32px; height:34px; padding:0; }
+            .titanium-header-bar #favoriteBtn, .titanium-header-bar .btn-fullscreen { width:32px; height:32px; }
+            .header-search-field input { font-size:13px !important; }
+        }
+
+        /* FIX KETAT HP: nama SYAILENDRA wajib terlihat, termasuk layar di bawah 640px */
+        @media (max-width:760px) {
+            .titanium-header-bar > div:first-child { flex:0 0 auto !important; min-width:max-content !important; }
+            .titanium-header-bar > div:first-child > a { display:inline-flex !important; flex:0 0 auto !important; align-items:center; gap:6px !important; min-width:max-content !important; white-space:nowrap !important; }
+            .titanium-header-bar .brand-text { display:inline-block !important; visibility:visible !important; opacity:1 !important; position:static !important; width:auto !important; max-width:none !important; margin:0 !important; overflow:visible !important; white-space:nowrap !important; color:#111827 !important; -webkit-text-fill-color:#111827 !important; background:none !important; filter:none !important; text-shadow:none !important; font-size:clamp(12px,3.8vw,18px) !important; line-height:1.05 !important; letter-spacing:0 !important; font-weight:900 !important; }
+        }
+        @media (max-width:360px) {
+            .titanium-header-bar { padding-left:6px !important; padding-right:6px !important; column-gap:4px !important; }
+            .titanium-header-bar > div:first-child { gap:4px !important; }
+            .titanium-header-bar > div:first-child > a { gap:4px !important; }
+            .titanium-header-bar .brand-text { font-size:12px !important; letter-spacing:0 !important; }
+            .titanium-header-bar > div:last-child { gap:4px !important; }
+        }
+</style>
+
+<style id="syailendra-mobile-category-single-row-fix">
+/* HP: kategori satu baris horizontal, bisa digeser ke samping */
+@media (max-width: 640px) {
+  main > section:first-child > .flex.gap-3.items-center {
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    align-items: stretch !important;
+    gap: 6px !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  main > section:first-child > .flex.gap-3.items-center > .bg-slate-200,
+  main > section:first-child > .flex.gap-3.items-center > .w-px {
+    display: none !important;
+  }
+  #allSectorFixedBtn,
+  .cat-item-card,
+  .cat-fixed-card {
+    flex: 0 0 72px !important;
+    width: 72px !important;
+    min-width: 72px !important;
+    max-width: 72px !important;
+    box-sizing: border-box !important;
+    padding: 6px 3px !important;
+  }
+  #categorySlider {
+    display: flex !important;
+    flex: 1 1 0% !important;
+    flex-flow: row nowrap !important;
+    gap: 6px !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none !important;
+    padding: 5px 2px 9px !important;
+  }
+  #categorySlider::-webkit-scrollbar { display: none !important; }
+  #categorySlider .cat-item-card {
+    display: flex !important;
+    flex: 0 0 72px !important;
+    width: 72px !important;
+    min-width: 72px !important;
+    max-width: 72px !important;
+  }
+  .category-image-box {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+    aspect-ratio: 1 / 1 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .category-label {
+    width: 100% !important;
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    text-align: center !important;
+  }
+  /* Di HP kategori disembunyikan sampai tombol KATEGORI ditekan. */
+  #categoryPanel.category-panel-mobile-collapsed { display: none !important; }
+  #categoryToggleBtn { min-height: 38px; cursor: pointer; }
+  #categoryToggleBtn .category-toggle-chevron { transition: transform .18s ease; }
+  #categoryToggleBtn[aria-expanded="true"] .category-toggle-chevron { transform: rotate(180deg); }
+}
+@media (min-width: 641px) {
+  #categoryPanel.category-panel-mobile-collapsed { display: flex !important; }
+  #categoryToggleBtn { cursor: default; }
+  #categoryToggleBtn .category-toggle-chevron { display: none !important; }
+}
+</style>
+<style id="syailendra-mobile-sidebar-toggle">
+.mobile-sidebar-toggle-wrap { display:none; }
+.mobile-sidebar-toggle-btn { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; min-height:42px; padding:10px 14px; border:1px solid #d4a017; border-radius:12px; background:linear-gradient(180deg,#fde68a 0%,#fbbf24 52%,#b77908 100%); color:#111827; font-size:12px; font-weight:900; letter-spacing:.06em; box-shadow:0 3px 0 #8a610d,0 5px 10px #0002; }
+.mobile-sidebar-toggle-btn:active { transform:translateY(1px); box-shadow:0 2px 0 #8a610d,0 3px 6px #0002; }
+#mobileSidebarToggleChevron { transition:transform .18s ease; }
+#mobileSidebarToggleBtn[aria-expanded="true"] #mobileSidebarToggleChevron { transform:rotate(180deg); }
+@media (max-width: 1023px) {
+  .mobile-sidebar-toggle-wrap { display:block; width:100%; }
+  #productFilterSidebar.mobile-sidebar-collapsed { display:none !important; }
+}
+@media (min-width: 1024px) {
+  .mobile-sidebar-toggle-wrap { display:none !important; }
+  #productFilterSidebar.mobile-sidebar-collapsed { display:block !important; }
+}
+@media (max-width: 640px) {
+  #categoryPanel.category-panel-mobile-collapsed { display:flex !important; }
+  #categoryToggleBtn { cursor:default !important; }
+  #categoryToggleChevron { display:none !important; }
+}
+</style>
+
+<style id="syailendra-mobile-tight-layout-v2">
+/* HP: rapatkan konten ke header tanpa mengubah layout desktop */
+@media (max-width: 640px) {
+  main.flex-grow { padding-top: 4px !important; padding-left: 8px !important; padding-right: 8px !important; row-gap: 8px !important; }
+  main > section:first-child { margin-top: 0 !important; padding: 8px !important; border-radius: 10px !important; }
+  main > section:first-child > .flex.items-center.justify-between { margin-bottom: 5px !important; }
+  /* KATEGORI: teks 25% lebih kecil (12px), sama dengan label FILTER */
+  #categoryToggleBtn {
+    min-height: 0 !important; padding: 6px 9px !important; gap: 6px !important;
+    border-radius: 8px !important; font-size: 12px !important; line-height: 1.2 !important;
+    letter-spacing: .02em !important; box-shadow: 0 2px 0 #8a610d, 0 3px 6px #0002 !important;
+  }
+  #categoryToggleBtn > i:first-child { font-size: 12px !important; }
+  #categoryPanel { margin-top: 0 !important; }
+  /* Tombol FILTER selebar isi, rata kiri dan tidak melebar memenuhi layar */
+  .mobile-sidebar-toggle-wrap { display:flex !important; justify-content:flex-start !important; width:100% !important; margin:0 !important; padding:0 !important; }
+  .mobile-sidebar-toggle-btn {
+    display:inline-flex !important; width:max-content !important; max-width:100% !important;
+    min-height:0 !important; min-width:0 !important; flex:0 0 auto !important;
+    justify-content:flex-start !important; gap:6px !important;
+    padding:6px 9px !important; border-radius:8px !important;
+    font-size:12px !important; line-height:1.2 !important; letter-spacing:.02em !important;
+    box-shadow:0 2px 0 #8a610d, 0 3px 6px #0002 !important;
+  }
+  /* Sembunyikan tulisan jumlah produk dan batas 60 di HP; kontrol urutkan tetap tampil */
+  main .lg\:col-span-5 > div.w-full.bg-white.p-4.rounded-2xl.border > div:first-child { display:none !important; }
+  main .lg\:col-span-5 > div.w-full.bg-white.p-4.rounded-2xl.border {
+    padding:8px !important; gap:6px !important; border-radius:10px !important;
+    flex-direction:row !important; justify-content:flex-end !important;
+  }
+  main .lg\:col-span-5 > div.w-full.bg-white.p-4.rounded-2xl.border > div:last-child {
+    width:100% !important; justify-content:flex-end !important; gap:6px !important;
+  }
+  main .lg\:col-span-5 > div.w-full.bg-white.p-4.rounded-2xl.border > div:last-child > span { font-size:12px !important; }
+  #sortSelect { max-width:68% !important; padding:6px 8px !important; font-size:12px !important; }
+}
+</style>
+
+<style id="syailendra-mobile-layout-fix-v3">
+@media screen and (max-width:640px) {
+  /* Dekatkan area kategori ke header dan rapatkan jarak antarbagiannya. */
+  body { padding-top: 85px !important; }
+  main.flex-grow.w-full { padding-top: 2px !important; padding-bottom: 12px !important; row-gap: 8px !important; }
+  main > section:first-child { margin-top: 0 !important; padding: 6px 8px !important; }
+  main > section:first-child > div:first-child { margin-bottom: 4px !important; }
+  /* Ukuran teks tombol KATEGORI sama dengan FILTER. */
+  #categoryToggleBtn, #categoryToggleBtn > span { font-size: 12px !important; line-height: 1.2 !important; }
+  #categoryToggleBtn { min-height: 0 !important; padding: 6px 9px !important; gap: 6px !important; }
+  #categoryToggleBtn > i { font-size: 12px !important; }
+  /* FILTER hanya selebar isinya dan menempel ke kiri. */
+  .mobile-sidebar-toggle-wrap { display:flex !important; width:100% !important; justify-content:flex-start !important; align-items:flex-start !important; margin:0 !important; padding:0 !important; }
+  #mobileSidebarToggleBtn { display:inline-flex !important; width:auto !important; max-width:100% !important; min-width:0 !important; flex:0 0 auto !important; justify-content:flex-start !important; padding:6px 9px !important; gap:6px !important; min-height:0 !important; font-size:12px !important; line-height:1.2 !important; }
+  #mobileSidebarToggleBtn > span, #mobileSidebarToggleBtn > i { font-size:12px !important; }
+  /* Targetkan penghitung melalui ID, bukan selector Tailwind yang rapuh. Sortir tetap terlihat. */
+  main section:has(#productCount) > div:has(> div > #productCount) > div:first-child { display:none !important; }
+  main section:has(#productCount) > div:has(> div > #productCount) { padding:7px !important; gap:6px !important; border-radius:10px !important; flex-direction:row !important; justify-content:flex-end !important; }
+  main section:has(#productCount) > div:has(> div > #productCount) > div:last-child { display:flex !important; width:100% !important; justify-content:flex-end !important; gap:6px !important; }
+  #sortSelect { max-width:72% !important; padding:6px 8px !important; font-size:12px !important; }
+}
+</style>
+
+<style id="syailendra-mobile-spacing-adjustment-v4">
+@media screen and (max-width: 640px) {
+  /* Turunkan awal konten sedikit agar tombol KATEGORI tidak tertutup header. */
+  body { padding-top: 99px !important; }
+  /* Naikkan FILTER dengan mengurangi jarak setelah panel kategori. */
+  main.flex-grow.w-full { row-gap: 8px !important; }
+  main.flex-grow.w-full > section:first-child { margin-bottom: 0 !important; padding-bottom: 3px !important; }
+  .mobile-sidebar-toggle-wrap { margin-top: 0 !important; padding-top: 0 !important; }
+}
+</style>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col w-full pt-[85px]">
+
+    <!-- TITANIUM HEADER BAR FIXED -->
+    <header class="titanium-header-bar">
+        <div class="flex items-center gap-3 shrink-0">
+            <div class="analog-clock-mini">
+                <div class="clock-glass"></div>
+                <div class="clock-markers" id="clock-markers"></div>
+                <div class="clock-center-mini"></div>
+                <div id="h-hand" class="hand-mini hour-mini"></div>
+                <div id="m-hand" class="hand-mini min-mini"></div>
+                <div id="s-hand" class="hand-mini sec-mini"></div>
+            </div>
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-white font-black text-base shadow">
+                    S
+                </div>
+                <h1 class="brand-text">TOKO SYAILENDRA</h1>
+            </a>
+        </div>
+
+        <!-- PENCARIAN TEKS, SUARA, DAN GAMBAR -->
+        <div class="header-search-row">
+            <div class="header-search-field">
+                <input type="text" id="searchInput" placeholder="Cari produk di 15 Sektor..."
+                    class="w-full bg-slate-100 focus:bg-white text-slate-800 text-sm sm:text-base rounded-full pl-10 pr-20 py-2 border border-slate-300 focus:border-amber-500 focus:outline-none transition-all shadow-inner">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <button id="searchBtn" class="absolute right-1 top-1/2 -translate-y-1/2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full transition-colors shadow">Cari</button>
+            </div>
+            <button type="button" id="voiceSearchBtn" class="header-tool-btn" title="Cari dengan suara" aria-label="Cari dengan suara"><i class="fa-solid fa-microphone"></i><span class="tool-label">Suara</span></button>
+            <button type="button" id="imageSearchBtn" class="header-tool-btn" title="Cari barang dengan gambar" aria-label="Cari barang dengan gambar"><i class="fa-regular fa-image"></i><span class="tool-label">Gambar</span></button>
+            <button type="button" id="cartBtn" class="header-tool-btn cart-header-btn" title="Buka keranjang" aria-label="Buka keranjang"><i class="fa-solid fa-bag-shopping"></i><span class="tool-label">Keranjang</span><span id="cartCount" class="cart-count">0</span></button>
+            <div class="account-wrap">
+                <button type="button" id="accountMenuBtn" class="account-avatar-btn" aria-label="Akun saya" aria-haspopup="true" aria-expanded="false" title="Akun Saya"><i id="accountDefaultIcon" class="fa-solid fa-user text-base"></i><img id="accountHeaderAvatar" alt="Foto profil" hidden></button>
+                <div id="accountMenu" class="account-menu" hidden>
+                    <button type="button" data-account-view="my"><i class="fa-regular fa-user w-4 text-amber-600"></i><span>Akun Saya</span></button>
+                    <button type="button" data-account-view="register"><i class="fa-solid fa-user-plus w-4 text-amber-600"></i><span>Pendaftaran</span></button>
+                    <button type="button" data-account-view="login"><i class="fa-solid fa-right-to-bracket w-4 text-amber-600"></i><span>Masuk / Login</span></button>
+                    <button type="button" data-account-view="password"><i class="fa-solid fa-key w-4 text-amber-600"></i><span>Ganti Password</span></button>
+                </div>
+            </div>
+            <input type="file" id="imageSearchInput" accept="image/*" capture="environment" aria-label="Pilih gambar barang">
+        </div>
+
+        <div class="flex items-center gap-3 shrink-0">
+            <button id="favoriteBtn" class="relative p-2 rounded-xl hover:bg-slate-200/60 text-slate-800 transition-colors" title="Favorit">
+                <i class="fa-regular fa-heart text-xl"></i>
+                <span id="favCount" class="absolute top-0 right-0 bg-amber-500 text-slate-950 font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+            </button>
+            <button class="btn-fullscreen" id="btn-fs" onclick="toggleFullScreen()" title="Fullscreen">
+                <i class="fas fa-expand" id="fs-icon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow w-full px-4 sm:px-6 py-6 space-y-6">
+
+        <!-- SECTION 15 KATEGORI SLIDER -->
+        <section class="w-full bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm relative">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2.5">
+                        <button type="button" id="categoryToggleBtn" aria-expanded="false" aria-controls="categoryPanel" class="category-toggle-btn inline-flex items-center gap-2 rounded-xl border border-amber-400 bg-gradient-to-b from-amber-300 via-amber-400 to-amber-600 px-4 py-2 text-sm font-black tracking-wide text-slate-950 shadow-md hover:brightness-105 active:translate-y-px">
+                            <i class="fa-solid fa-layer-group"></i><span>KATEGORI</span><i id="categoryToggleChevron" class="fa-solid fa-chevron-down category-toggle-chevron"></i>
+                        </button>
+                    </h2>
+                    
+                </div>
+                
+                <div class="flex items-center gap-2.5">
+                    <button id="scrollLeftBtn" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-amber-500 hover:text-white text-slate-700 flex items-center justify-center transition-all shadow-sm border border-slate-200 text-sm">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button id="scrollRightBtn" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-amber-500 hover:text-white text-slate-700 flex items-center justify-center transition-all shadow-sm border border-slate-200 text-sm">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="categoryPanel" class="flex gap-3 items-center">
+                <!-- KARTU "SEMUA SEKTOR" FIXED -->
+                <div id="allSectorFixedBtn" onclick="selectCategory('all')" 
+                     class="cat-fixed-card shrink-0 cursor-pointer titanium-3d-card flex flex-col items-center p-[10px] text-slate-900 z-10 border-2 ${activeCategory === 'all' ? 'titanium-3d-active' : ''}">
+                    <div class="category-image-box rounded-2xl overflow-hidden mb-2 shadow-sm bg-slate-950 flex items-center justify-center text-amber-400 border border-slate-800">
+                        <i class="fa-solid fa-border-all text-2xl sm:text-3xl"></i>
+                    </div>
+                    <span class="category-label text-xs sm:text-sm font-black text-center">Semua Sektor</span>
+                </div>
+
+                <div class="w-px h-28 bg-slate-200 shrink-0 mx-1"></div>
+
+                <div id="categorySlider" class="flex gap-3 overflow-x-auto no-scrollbar scroll-smooth py-2 flex-grow">
+                    <!-- Rendered via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TOMBOL SIDEBAR FILTER KHUSUS HP -->
+        <div class="mobile-sidebar-toggle-wrap">
+            <button type="button" id="mobileSidebarToggleBtn" aria-expanded="false" aria-controls="productFilterSidebar" class="mobile-sidebar-toggle-btn">
+                <i class="fa-solid fa-sliders"></i><span>FILTER</span><i id="mobileSidebarToggleChevron" class="fa-solid fa-chevron-down"></i>
+            </button>
+        </div>
+
+        <!-- GRID SIDEBAR & PRODUK -->
+        <div class="w-full grid grid-cols-1 lg:grid-cols-6 gap-6 items-start">
+            
+            <!-- SIDEBAR FILTER KIRI -->
+            <aside id="productFilterSidebar" class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-5 lg:sticky lg:top-28">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-amber-500"></i> Filter Presisi
+                    </h3>
+                    <button id="resetFilterBtn" class="text-xs text-amber-600 hover:underline font-semibold">Reset</button>
+                </div>
+
+                <div>
+                    <label class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2.5">Promo & Pengiriman</label>
+                    <div class="space-y-2 text-sm">
+                        <label class="flex items-center gap-2 cursor-pointer"><input id="filterCOD" type="checkbox" class="rounded border-slate-300 text-amber-500 focus:ring-amber-500"> <span>COD tersedia</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input id="filterFreeShipping" type="checkbox" class="rounded border-slate-300 text-amber-500 focus:ring-amber-500"> <span>Bebas biaya pengiriman</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input id="filterSale" type="checkbox" class="rounded border-slate-300 text-amber-500 focus:ring-amber-500"> <span>Obral / promo</span></label>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-2">Filter COD dan gratis ongkir hanya cocok jika datanya tersedia dan terverifikasi.</p>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <div>
+                    <label class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2.5">Sub-Kategori Niche</label>
+                    <div class="space-y-2 max-h-64 overflow-y-auto pr-1" id="subCategoryFilterContainer"></div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <div>
+                    <label class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2.5">Merchant Rekanan</label>
+                    <div class="space-y-2 text-sm" id="merchantFilterContainer"></div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <div>
+                    <label class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2.5">Rentang Harga (Rp)</label>
+                    <div class="grid grid-cols-2 gap-2 mb-2">
+                        <input type="number" id="minPriceInput" placeholder="Min" class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-amber-500">
+                        <input type="number" id="maxPriceInput" placeholder="Max" class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-amber-500">
+                    </div>
+                    <button id="applyPriceBtn" class="w-full py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-semibold transition-colors">Terapkan</button>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <div>
+                    <label class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2">Rating Minimum</label>
+                    <select id="ratingSelect" class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-amber-500 text-slate-700">
+                        <option value="0">Semua Rating</option>
+                        <option value="4">⭐ 4.0 ke atas</option>
+                        <option value="4.5">⭐ 4.5 ke atas</option>
+                        <option value="4.8">⭐ 4.8 Ke atas</option>
+                    </select>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <section aria-label="Dioperasikan di Negara" class="pt-1">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Dioperasikan di Negara</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://shopee.com.ar/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-amber-600 transition-colors">Argentina</a></li>
+                        <li><a href="https://shopee.sg/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-amber-600 transition-colors">Singapura</a></li>
+                        <li><a href="https://shopee.co.id/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-amber-600 transition-colors">Indonesia</a></li>
+                        <li><a href="https://shopee.co.th/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-amber-600 transition-colors">Thailand</a></li>
+                        <li><a href="https://shopee.com.my/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-amber-600 transition-colors">Malaysia</a></li>
+                        <li><a href="https://shopee.vn/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-amber-600 transition-colors">Vietnam</a></li>
+                        <li><a href="https://shopee.ph/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-amber-600 transition-colors">Filipina</a></li>
+                        <li><a href="https://shopee.com.br/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-amber-600 transition-colors">Brazil</a></li>
+                        <li><a href="https://shopee.com.mx/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-amber-600 transition-colors">México</a></li>
+                        <li><a href="https://shopee.tw/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-amber-600 transition-colors">Taiwan</a></li>
+                    </ul>
+                </section>
+            </aside>
+
+            <!-- PRODUCT AREA -->
+            <section class="lg:col-span-5 space-y-5">
+                
+                <div class="w-full bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div class="text-sm text-slate-600">
+                        Menampilkan <span id="productCount" class="font-bold text-slate-900">0</span> produk (Maks. 60 pcs/halaman)
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm text-slate-600 shrink-0">Urutkan:</span>
+                        <select id="sortSelect" class="text-sm bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2 font-medium text-slate-700 focus:outline-none focus:border-amber-500">
+                            <option value="featured">Paling Sesuai</option>
+                            <option value="newest">Terbaru (data tanggal / ID)</option>
+                            <option value="favorites">Favorit Saya</option>
+                            <option value="bestselling">Terlaris</option>
+                            <option value="discount">Diskon Terbesar</option>
+                            <option value="rating">Rating Tertinggi</option>
+                            <option value="price-low">Harga: Rendah ke Tinggi</option>
+                            <option value="price-high">Harga: Tinggi ke Rendah</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="productGrid" class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
+                    <!-- Rendered via JS -->
+                </div>
+
+                <div id="paginationContainer" class="w-full flex justify-center items-center gap-2 pt-6 pb-4 text-base">
+                    <!-- Rendered via JS -->
+                </div>
+
+                <div id="emptyState" class="hidden bg-white rounded-2xl p-16 text-center border border-slate-200 shadow-sm">
+                    <i class="fa-solid fa-box-open text-7xl text-slate-300 mb-4"></i>
+                    <h3 class="text-xl font-bold text-slate-700">Produk Tidak Ditemukan</h3>
+                    <p class="text-base text-slate-500 mt-1">Coba sesuaikan filter atau kata kunci pencarian Anda.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- IMAGE SEARCH PREVIEW -->
+    <div id="imageSearchModal" class="fixed inset-0 z-[1200] flex items-center justify-center bg-slate-950/80 p-4 opacity-0 pointer-events-none transition-opacity" role="dialog" aria-modal="true" aria-labelledby="imageSearchTitle">
+        <div class="w-full max-w-md rounded-2xl bg-white p-5 shadow-2xl">
+            <div class="flex items-center justify-between gap-3 mb-3"><h3 id="imageSearchTitle" class="text-lg font-black text-slate-900"><i class="fa-regular fa-image text-amber-500 mr-2"></i>Pencarian dengan Gambar</h3><button type="button" id="closeImageSearchBtn" class="rounded-lg px-3 py-1 text-slate-600 hover:bg-slate-100" aria-label="Tutup">✕</button></div>
+            <img id="imageSearchPreview" alt="Pratinjau gambar barang yang dipilih" class="hidden max-h-64 w-full rounded-xl border border-slate-200 object-contain bg-slate-50 mb-3">
+            <p id="imageSearchMessage" class="text-sm leading-relaxed text-slate-600">Pilih foto barang untuk memulai pencarian visual.</p>
+            <p class="mt-2 text-xs text-slate-500">Catatan: pencocokan otomatis gambar dengan katalog memerlukan layanan pencarian visual/backend. Gambar ini belum dikirim ke server.</p>
+            <div class="mt-4 flex justify-end gap-2"><button type="button" id="chooseAnotherImageBtn" class="rounded-full border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-100">Pilih Gambar</button><button type="button" id="closeImageSearchBtn2" class="rounded-full bg-amber-500 px-4 py-2 text-sm font-bold text-slate-950 hover:bg-amber-400">Tutup</button></div>
+        </div>
+    </div>
+
+    <!-- AKUN TOKO SYAILENDRA: antarmuka profil lokal, autentikasi server belum tersambung -->
+    <div id="accountModal" class="account-modal" hidden role="dialog" aria-modal="true" aria-labelledby="accountModalTitle">
+        <section class="account-panel">
+            <div class="flex items-center justify-between gap-3 border-b border-slate-200 px-5 py-4">
+                <h2 id="accountModalTitle" class="text-lg font-black text-slate-900">Akun Saya</h2>
+                <button type="button" id="accountModalClose" class="rounded-lg px-3 py-1 text-slate-600 hover:bg-slate-100" aria-label="Tutup">✕</button>
+            </div>
+            <div id="accountModalContent" class="p-5"></div>
+        </section>
+    </div>
+
+    <!-- KERANJANG TOKO SYAILENDRA -->
+    <div id="cartModal" class="fixed inset-0 z-[1250] flex items-center justify-center bg-slate-950/80 p-3 sm:p-4 opacity-0 pointer-events-none transition-opacity" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+        <div class="w-full max-w-2xl max-h-[88vh] overflow-hidden rounded-2xl bg-white shadow-2xl flex flex-col">
+            <div class="flex items-center justify-between gap-3 p-4 sm:p-5 border-b border-slate-200"><h2 id="cartTitle" class="text-lg sm:text-xl font-black text-slate-900"><i class="fa-solid fa-bag-shopping text-amber-500 mr-2"></i>Kantong Keranjang</h2><button type="button" id="closeCartBtn" class="rounded-lg px-3 py-1 text-slate-600 hover:bg-slate-100" aria-label="Tutup keranjang">✕</button></div>
+            <div id="cartItems" class="overflow-y-auto px-4 sm:px-5 flex-1"><p class="py-10 text-center text-sm text-slate-500">Keranjang masih kosong. Pilih produk lalu tekan “Masukkan Keranjang”.</p></div>
+            <div class="border-t border-slate-200 p-4 sm:p-5 bg-slate-50"><div class="flex items-center justify-between gap-3 mb-3"><span class="font-bold text-slate-600">Subtotal katalog</span><strong id="cartSubtotal" class="text-lg font-black text-amber-600">Rp 0</strong></div><p class="text-xs text-slate-500 mb-3">Harga dan ketersediaan mengikuti informasi produk. Keranjang ini tersimpan di browser/perangkat ini; transaksi dilakukan pada platform merchant tujuan.</p><div class="flex flex-wrap justify-end gap-2"><button type="button" id="clearCartBtn" class="rounded-full border border-slate-300 px-4 py-2 text-sm font-bold text-slate-600 hover:bg-white">Kosongkan</button><button type="button" id="continueShoppingBtn" class="rounded-full bg-amber-500 px-4 py-2 text-sm font-black text-slate-950 hover:bg-amber-400">Lanjut Jelajah</button></div></div>
+        </div>
+    </div>
+
+    <!-- FOOTER LENGKAP -->
+    <footer class="w-full bg-slate-900 text-slate-300 border-t border-slate-800 mt-12 px-6 md:px-8 py-10 text-sm">
+        <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div class="space-y-3">
+                <div class="text-xl font-black text-white tracking-tight">TOKO SYAILENDRA<span class="text-amber-500">.</span></div>
+                <p class="leading-relaxed text-slate-400">Toko Syailendra adalah katalog belanja digital independen yang dirancang untuk membantu Anda menjelajahi beragam produk, menemukan inspirasi, dan membandingkan pilihan dengan lebih praktis. Kami menghadirkan katalog lintas kategori dalam satu pengalaman yang sederhana dan nyaman. Toko Syailendra dikelola secara mandiri; transaksi dilanjutkan pada platform merchant tujuan sesuai ketentuan masing-masing.</p>
+                <button type="button" onclick="openFooterInfo('about')" class="text-amber-400 hover:text-amber-300 font-semibold">Tentang Toko <span aria-hidden="true">→</span></button>
+            </div>
+            <div>
+                <h4 class="font-bold text-white uppercase tracking-wider mb-3">Platform Tujuan</h4>
+                <ul class="space-y-2 text-slate-400">
+                    <li><span>Shopee Indonesia</span></li>
+                    <li><span>Lazada</span></li>
+                    <li><span>Tokopedia</span></li>
+                    <li><span>TikTok Shop</span></li>
+                </ul>
+                <p class="text-xs text-slate-500 mt-3 leading-relaxed">Nama platform disebut hanya untuk mengidentifikasi tujuan tautan produk. Toko Syailendra dikelola secara mandiri dan tidak mewakili platform-platform tersebut.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-white uppercase tracking-wider mb-3">Sektor Populer</h4>
+                <ul class="footer-sector-grid grid grid-flow-col grid-rows-8 grid-cols-2 gap-x-4 gap-y-2 text-slate-400 text-xs sm:text-sm">
+                    <li><a href="#" onclick="selectCategory('fashion'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Fashion</a></li>
+                    <li><a href="#" onclick="selectCategory('beauty'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Beauty</a></li>
+                    <li><a href="#" onclick="selectCategory('tech-electronics'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Tech &amp; Electronics</a></li>
+                    <li><a href="#" onclick="selectCategory('pets'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Pets</a></li>
+                    <li><a href="#" onclick="selectCategory('food'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Food</a></li>
+                    <li><a href="#" onclick="selectCategory('hobbies-arts-crafts'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Hobbies, Arts &amp; Crafts</a></li>
+                    <li><a href="#" onclick="selectCategory('pc-mobile-games'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">PC &amp; Mobile Games</a></li>
+                    <li><a href="#" onclick="selectCategory('books-education'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Books &amp; Education</a></li>
+                    <li><a href="#" onclick="selectCategory('automotive'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Automotive</a></li>
+                    <li><a href="#" onclick="selectCategory('home-living'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Home &amp; Living</a></li>
+                    <li><a href="#" onclick="selectCategory('sports-outdoor'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Sports &amp; Outdoor</a></li>
+                    <li><a href="#" onclick="selectCategory('travel'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Travel</a></li>
+                    <li><a href="#" onclick="selectCategory('finance'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Finance</a></li>
+                    <li><a href="#" onclick="selectCategory('it-internet'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">IT &amp; Internet</a></li>
+                    <li><a href="#" onclick="selectCategory('health-wellness'); document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}); return false;" class="hover:text-amber-400">Health &amp; Wellness</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white uppercase tracking-wider mb-3">Bantuan &amp; Kebijakan</h4>
+                <ul class="space-y-2 text-slate-400">
+                    <li><button type="button" onclick="openFooterInfo('faq')" class="text-left hover:text-amber-400">FAQ &amp; Bantuan</button></li>
+                    <li><button type="button" onclick="openFooterInfo('affiliate')" class="text-left hover:text-amber-400">Informasi Afiliasi</button></li>
+                    <li><button type="button" onclick="openFooterInfo('privacy')" class="text-left hover:text-amber-400">Kebijakan Privasi</button></li>
+                    <li><button type="button" onclick="openFooterInfo('terms')" class="text-left hover:text-amber-400">Syarat &amp; Ketentuan</button></li>
+                    <li><button type="button" onclick="openFooterInfo('returns')" class="text-left hover:text-amber-400">Pengiriman, Pengembalian &amp; Refund</button></li>
+                    <li><button type="button" onclick="openFooterInfo('contact')" class="text-left hover:text-amber-400">Kontak &amp; Pengaduan</button></li>
+                </ul>
+            </div>
+        </div>
+        <!-- IKUTI KAMI: sementara dalam pemrosesan, tidak membuka akun sosial pihak lain -->
+        <section class="footer-follow" aria-label="Ikuti Kami">
+            <h4 class="font-bold text-white uppercase tracking-wider mb-3">Ikuti Kami</h4>
+            <div class="footer-follow-links">
+                <button type="button" class="footer-follow-button" onclick="showSocialProcessing('Facebook')" aria-label="Facebook — Dalam Pemrosesan" title="Facebook"><img src="https://down-id.img.susercontent.com/file/622550fb2ffb8ddf3913538801bc4c05" alt="Facebook" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>
+                <button type="button" class="footer-follow-button" onclick="showSocialProcessing('Instagram')" aria-label="Instagram — Dalam Pemrosesan" title="Instagram"><img src="https://down-id.img.susercontent.com/file/ec4d29967019ea44642daa53a40ff89c" alt="Instagram" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>
+                <button type="button" class="footer-follow-button" onclick="showSocialProcessing('X / Twitter')" aria-label="X / Twitter — Dalam Pemrosesan" title="X / Twitter"><img src="https://down-id.img.susercontent.com/file/2bf3f4d1e10c63d4df16cf4090ded0a5" alt="X / Twitter" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>
+                <button type="button" class="footer-follow-button" onclick="showSocialProcessing('LinkedIn')" aria-label="LinkedIn — Dalam Pemrosesan" title="LinkedIn"><img src="https://down-id.img.susercontent.com/file/32530e4a6641210fbbfdaf95f507aa1e" alt="LinkedIn" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>
+                <button type="button" class="footer-follow-button" onclick="showSocialProcessing('Kampus Shopee')" aria-label="Kampus Shopee — Dalam Pemrosesan" title="Kampus Shopee"><img src="https://down-id.img.susercontent.com/file/a4c827473f54e4a6ae4550a14ea92653" alt="Kampus Shopee" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>
+            </div>
+            <p class="mt-2 text-xs text-slate-500">Akun media sosial Toko Syailendra sedang disiapkan.</p>
+        </section>
+
+        <!-- APLIKASI TOKO SYAILENDRA: aset visual sementara; semua klik menampilkan status pemrosesan -->
+        <section class="footer-app-download" aria-label="Aplikasi Toko Syailendra">
+            <div class="footer-app-copy">
+                <h4 class="font-bold text-white uppercase tracking-wider mb-2">Jelajahi Toko Syailendra</h4>
+                <p class="text-slate-400 leading-relaxed">Akses katalog dengan lebih praktis. Pengembangan pengalaman aplikasi Toko Syailendra sedang dipersiapkan.</p>
+                <p class="text-xs text-slate-500 mt-2">Fitur aplikasi dan tautan unduhan belum tersedia.</p>
+            </div>
+            <div class="footer-app-assets" aria-label="Akses aplikasi yang sedang disiapkan">
+                <button type="button" class="footer-app-qr" onclick="showSocialProcessing('Kode QR Aplikasi Toko Syailendra')" aria-label="Kode QR aplikasi — Dalam Pemrosesan" title="Dalam Pemrosesan"><img src="https://down-id.img.susercontent.com/file/bed0af4663f887db16a7047185478dcf" alt="Ilustrasi kode QR aplikasi" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>
+                <div class="footer-app-badges">
+                    <button type="button" class="footer-app-badge" onclick="showSocialProcessing('Aplikasi Toko Syailendra')" aria-label="Aplikasi Toko Syailendra — Dalam Pemrosesan" title="Dalam Pemrosesan"><img src="https://down-id.img.susercontent.com/file/bbf28a2328ec8c7f57b9cc2069d693fd" alt="Ilustrasi aplikasi 1" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>
+                    <button type="button" class="footer-app-badge" onclick="showSocialProcessing('Aplikasi Toko Syailendra')" aria-label="Aplikasi Toko Syailendra — Dalam Pemrosesan" title="Dalam Pemrosesan"><img src="https://down-id.img.susercontent.com/file/1858a153798406c87945f15a38bf4874" alt="Ilustrasi aplikasi 2" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>
+                    <button type="button" class="footer-app-badge" onclick="showSocialProcessing('Aplikasi Toko Syailendra')" aria-label="Aplikasi Toko Syailendra — Dalam Pemrosesan" title="Dalam Pemrosesan"><img src="https://down-id.img.susercontent.com/file/0e74339f5da500baaaa52785f175bc6d" alt="Ilustrasi aplikasi 3" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer-service-groups">
+            <section class="footer-service-group" aria-label="Pembayaran">
+                <h4 class="font-bold text-white uppercase tracking-wider mb-3">Pembayaran</h4>
+                <div class="footer-service-logos">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasg-m3elfigsva7j31" alt="Logo metode pembayaran 1" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rask-m3elfkyp7rvyc9" alt="Logo metode pembayaran 2" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasi-m3elfnywtdgv0b" alt="Logo metode pembayaran 3" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasa-m3elfqc3cpsg90" alt="Logo metode pembayaran 4" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasc-m3elfssvqtqn58" alt="Logo metode pembayaran 5" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rask-m3elfv3kdsb4ae" alt="Logo metode pembayaran 6" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7ras8-m3elfxpckju7db" alt="Logo metode pembayaran 7" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasc-m3elg0155yq700" alt="Logo metode pembayaran 8" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rask-m3elg2s74z1r24" alt="Logo metode pembayaran 9" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasi-m3elg6a60mmod7" alt="Logo metode pembayaran 10" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasi-m3elg985pkb340" alt="Logo metode pembayaran 11" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasg-m3elgbu7vvkge8" alt="Logo metode pembayaran 12" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasi-m3elgeem4oo3e8" alt="Logo metode pembayaran 13" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasf-m3elght959awa2" alt="Logo metode pembayaran 14" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasb-m3elgtxze51rb0" alt="Logo metode pembayaran 15" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasi-m3elgwdxtfqme2" alt="Logo metode pembayaran 16" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasd-m3elh2ewzwnj27" alt="Logo metode pembayaran 17" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                </div>
+            </section>
+            <section class="footer-service-group" aria-label="Pengiriman">
+                <h4 class="font-bold text-white uppercase tracking-wider mb-3">Pengiriman</h4>
+                <div class="footer-service-logos">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasj-m3elk3axne8sa2" alt="Logo layanan pengiriman 1" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasf-m3elk52h2gygb5" alt="Logo layanan pengiriman 2" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7ra0u-mcugpj7nj6b9b1" alt="Logo layanan pengiriman 3" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasm-m3elk9oyat27a6" alt="Logo layanan pengiriman 4" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7ras9-m3elkbmvgj1460" alt="Logo layanan pengiriman 5" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasa-m3elkh81a3fgae" alt="Logo layanan pengiriman 6" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasb-m3elkjsfixy0e0" alt="Logo layanan pengiriman 7" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rase-m3elkn1irjxb9f" alt="Logo layanan pengiriman 8" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasg-m3elktb3lhlk9e" alt="Logo layanan pengiriman 9" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-822wn-mllrp7myups00c" alt="Logo layanan pengiriman 10" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasa-m3elkyklw3x893" alt="Logo layanan pengiriman 11" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rase-m3ell0woh4yg37" alt="Logo layanan pengiriman 12" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                    <img src="https://down-id.img.susercontent.com/file/id-11134258-7rasm-m3ell3uy5l0fa8" alt="Logo layanan pengiriman 13" loading="lazy" decoding="async" class="footer-service-logo" referrerpolicy="no-referrer">
+                </div>
+            </section>
+        </div>
+        <div class="border-t border-slate-800 pt-5 flex flex-col sm:flex-row gap-2 sm:justify-between sm:items-center text-xs text-slate-500">
+            <p>&copy; 2026 Toko Syailendra. Hak cipta dilindungi.</p>
+            <p>Katalog independen; bukan situs resmi atau perwakilan platform pihak ketiga.</p>
+        </div>
+    </footer>
+
+    <!-- DIALOG INFORMASI FOOTER -->
+    <div id="footerInfoModal" class="fixed inset-0 z-[1300] flex items-center justify-center bg-slate-950/80 p-4 opacity-0 pointer-events-none transition-opacity" role="dialog" aria-modal="true" aria-labelledby="footerInfoTitle">
+        <div class="w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 p-5 sm:p-7 text-slate-200 shadow-2xl">
+            <div class="flex items-start justify-between gap-4 mb-4"><h3 id="footerInfoTitle" class="text-xl font-black text-white">Informasi Toko</h3><button type="button" onclick="closeFooterInfo()" class="rounded-lg px-3 py-1 text-slate-300 hover:bg-slate-800" aria-label="Tutup dialog">✕</button></div>
+            <div id="footerInfoBody" class="space-y-3 text-sm leading-relaxed text-slate-300"></div>
+            <div class="mt-6 flex justify-end"><button type="button" onclick="closeFooterInfo()" class="rounded-full bg-amber-400 px-5 py-2 font-bold text-slate-950 hover:bg-amber-300">Mengerti</button></div>
+        </div>
+    </div>
+
+    <!-- MODAL QUICK VIEW -->
+    <div id="quickViewModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-white rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl transform scale-95 transition-all duration-300 relative max-h-[92vh] flex flex-col lg:flex-row border border-slate-200">
+            
+            <button id="closeModalBtn" class="absolute top-4 right-4 z-20 w-10 h-10 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full flex items-center justify-center transition-colors text-lg shadow-md">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="w-full p-6 grid grid-cols-1 md:grid-cols-12 gap-6 overflow-y-auto max-h-[90vh]">
+                
+                <div class="md:col-span-5 flex flex-col items-center justify-center bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <div class="relative aspect-square w-full rounded-xl overflow-hidden bg-white border border-slate-200 shadow-inner">
+                        <img id="modalMainImg" src="" alt="Main Preview" class="w-full h-full object-cover transition-all duration-300">
+                        <span id="modalDiscountBadge" class="absolute top-3 left-3 bg-red-500 text-white font-black text-sm px-3 py-1 rounded-full shadow-md"></span>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 flex md:flex-col gap-3 overflow-x-auto md:overflow-y-auto max-h-[420px] p-2 bg-slate-50/60 rounded-2xl border border-slate-100 justify-start" id="modalThumbnails">
+                </div>
+
+                <div class="md:col-span-5 flex flex-col justify-between space-y-4 pr-2">
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2">
+                            <span id="modalMerchantBadge" class="text-xs font-bold uppercase px-3 py-1 rounded-full text-white"></span>
+                            <span id="modalCategory" class="text-xs text-slate-500 font-medium"></span>
+                        </div>
+
+                        <h2 id="modalTitle" class="text-xl font-extrabold text-slate-900 leading-snug"></h2>
+
+                        <div class="grid grid-cols-3 gap-2 py-2 px-3 bg-slate-50 rounded-xl border border-slate-200 text-center">
+                            <div>
+                                <span class="text-[10px] text-slate-400 uppercase font-bold block">Rating</span>
+                                <div class="flex justify-center items-center gap-1 text-amber-500 text-xs font-extrabold" id="modalRatingContainer">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span id="modalRatingVal" class="text-slate-800"></span>
+                                </div>
+                            </div>
+                            <div class="border-x border-slate-200">
+                                <span class="text-[10px] text-slate-400 uppercase font-bold block">Terjual</span>
+                                <span id="modalSoldVal" class="text-xs font-extrabold text-slate-800"></span>
+                            </div>
+                            <div>
+                                <span class="text-[10px] text-slate-400 uppercase font-bold block">Respon Toko</span>
+                                <span id="modalResponseVal" class="text-xs font-extrabold text-emerald-600">99% (Sangat Cepat)</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-amber-50/70 p-4 rounded-xl border border-amber-200/80">
+                            <span class="text-xs text-amber-800 font-semibold block mb-0.5">Harga Promo Terverifikasi:</span>
+                            <div class="flex items-baseline gap-3">
+                                <span id="modalPrice" class="text-3xl font-black text-amber-600"></span>
+                                <span id="modalOriginalPrice" class="text-sm text-slate-400 line-through"></span>
+                            </div>
+                        </div>
+
+                        <p id="modalDescription" class="text-xs text-slate-600 leading-relaxed line-clamp-3"></p>
+                    </div>
+
+                    <div class="space-y-2.5 pt-2 border-t border-slate-100">
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <button onclick="closeModal()" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-all">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <span>Kembali</span>
+                            </button>
+                            <button onclick="takeScreenshot()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-all">
+                                <i class="fa-solid fa-camera"></i>
+                                <span>Screen Shot</span>
+                            </button>
+                        </div>
+
+                        <button onclick="addToCart()" class="w-full py-3 bg-amber-100 hover:bg-amber-200 text-amber-900 font-extrabold text-sm rounded-xl flex items-center justify-center gap-2 border border-amber-300 transition-all">
+                            <i class="fa-solid fa-cart-plus text-base"></i>
+                            <span>Masukkan Keranjang</span>
+                        </button>
+
+                        <a id="modalBuyBtn" href="#" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-base rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition-all">
+                            <span>Belanja Sekarang</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Ilustrasi dummy unik untuk setiap kategori dan subkategori; tidak memakai gambar berulang.
+        function makeCatalogTile(label, emoji, index) {
+            const palettes = [ ['#0f172a','#334155','#fbbf24'], ['#172554','#1d4ed8','#bfdbfe'], ['#3f1d2e','#9d174d','#fbcfe8'], ['#052e16','#15803d','#bbf7d0'], ['#431407','#c2410c','#fed7aa'], ['#312e81','#6366f1','#e0e7ff'], ['#083344','#0891b2','#a5f3fc'], ['#422006','#a16207','#fef3c7'] ];
+            const p = palettes[Math.abs(index) % palettes.length];
+            const safeLabel = String(label).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${p[0]}"/><stop offset="1" stop-color="${p[1]}"/></linearGradient><radialGradient id="r"><stop stop-color="${p[2]}" stop-opacity=".28"/><stop offset="1" stop-color="${p[2]}" stop-opacity="0"/></radialGradient></defs><rect width="480" height="320" rx="28" fill="url(#g)"/><circle cx="240" cy="145" r="150" fill="url(#r)"/><path d="M20 250 Q120 190 230 260 T460 230 L480 320 L0 320Z" fill="#fff" opacity=".06"/><text x="240" y="155" font-size="100" text-anchor="middle" dominant-baseline="middle">${emoji}</text><text x="240" y="265" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="${p[2]}" text-anchor="middle">${safeLabel.length > 28 ? safeLabel.slice(0,26)+'…' : safeLabel}</text></svg>`;
+            return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+        }
+        const categoryArt = {
+            'fashion':'👕','beauty':'💄','tech-electronics':'🎧','pets':'🐾','food':'🍜','hobbies-arts-crafts':'🎨','pc-mobile-games':'🎮','books-education':'📚','automotive':'🚘','home-living':'🛋️','sports-outdoor':'🏕️','travel':'🧳','finance':'💳','it-internet':'💻','health-wellness':'🩺'
+        };
+        const subcategoryArt = {
+            'Pakaian Pria':'👔','Pakaian Wanita':'👗','Sepatu & Sneakers':'👟','Tas & Dompet':'👜','Aksesoris Fashion':'💍',
+            'Skincare Wajah':'🧴','Kosmetik & Makeup':'💋','Perawatan Rambut':'💇','Parfum & Perawatan Diri':'🧼',
+            'Audio & Headphone':'🎧','Wearable Tech':'⌚','Aksesoris HP & Laptop':'📱','Kamera & Video':'📷',
+            'Makanan Kucing':'🐈','Makanan Anjing':'🐕','Aksesoris & Mainan Pet':'🦴','Kandang & Perawatan':'🐾',
+            'Cemilan & Snack':'🍿','Minuman Sehat':'🥤','Bumbu & Bahan Makanan':'🥕','Kopi & Teh Premium':'☕',
+            'Alat Lukis & Gambar':'🖌️','Perlengkapan Jahit':'🧵','Model Kit & Figur':'🤖','Kerajinan Tangan':'🧶',
+            'Aksesoris Gaming':'🕹️','Voucher & Topup':'🎟️','Konsol & Gamepad':'🎮','Kursi & Meja Gaming':'🪑',
+            'Buku Pengembangan Diri':'📘','Novel & Komik':'📖','Alat Tulis Kantor':'✏️','Kursus & Edukasi':'🎓',
+            'Aksesoris Mobil':'🚗','Aksesoris Motor':'🏍️','Oli & Perawatan Mesin':'🛢️','Helm & Riding Gear':'🪖',
+            'Dekorasi Ruangan':'🖼️','Perlengkapan Dapur':'🍳','Pencahayaan & Lampu':'💡','Furniture':'🛋️',
+            'Pakaian Olahraga':'🏃','Alat Gym & Fitness':'🏋️','Perlengkapan Camping':'⛺','Sepeda & Aksesoris':'🚲',
+            'Koper & Tas Travel':'🧳','Aksesoris Perjalanan':'🧭','Tiket & Tour Package':'🎫',
+            'Kartu Kredit & Bank':'💳','Asuransi & Proteksi':'🛡️','Investasi & Tabungan':'📈',
+            'SaaS & Software':'🧩','Hosting & Domain':'🌐','Layanan Cloud & VPN':'☁️',
+            'Suplemen & Vitamin':'💊','Alat Kesehatan':'🩺','Minyak Esensial & Relaksasi':'🌿'
+        };
+
+        const categoriesData = [
+            { id: 'fashion', name: 'Fashion', img: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&q=80', desc: 'Pakaian & Aksesoris', subs: ['Pakaian Pria', 'Pakaian Wanita', 'Sepatu & Sneakers', 'Tas & Dompet', 'Aksesoris Fashion'] },
+            { id: 'beauty', name: 'Beauty', img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80', desc: 'Skincare & Makeup', subs: ['Skincare Wajah', 'Kosmetik & Makeup', 'Perawatan Rambut', 'Parfum & Perawatan Diri'] },
+            { id: 'tech-electronics', name: 'Tech & Electronics', img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80', desc: 'Gadget & Audio', subs: ['Audio & Headphone', 'Wearable Tech', 'Aksesoris HP & Laptop', 'Kamera & Video'] },
+            { id: 'pets', name: 'Pets', img: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&q=80', desc: 'Kebutuhan Hewan', subs: ['Makanan Kucing', 'Makanan Anjing', 'Aksesoris & Mainan Pet', 'Kandang & Perawatan'] },
+            { id: 'food', name: 'Food', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80', desc: 'Makanan & Minuman', subs: ['Cemilan & Snack', 'Minuman Sehat', 'Bumbu & Bahan Makanan', 'Kopi & Teh Premium'] },
+            { id: 'hobbies-arts-crafts', name: 'Hobbies, Arts & Crafts', img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80', desc: 'Kerajinan & Seni', subs: ['Alat Lukis & Gambar', 'Perlengkapan Jahit', 'Model Kit & Figur', 'Kerajinan Tangan'] },
+            { id: 'pc-mobile-games', name: 'PC & Mobile Games', img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&q=80', desc: 'Gaming & Vouchers', subs: ['Aksesoris Gaming', 'Voucher & Topup', 'Konsol & Gamepad', 'Kursi & Meja Gaming'] },
+            { id: 'books-education', name: 'Books & Education', img: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&q=80', desc: 'Buku & Edukasi', subs: ['Buku Pengembangan Diri', 'Novel & Komik', 'Alat Tulis Kantor', 'Kursus & Edukasi'] },
+            { id: 'automotive', name: 'Automotive', img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&q=80', desc: 'Otomotif & Garasi', subs: ['Aksesoris Mobil', 'Aksesoris Motor', 'Oli & Perawatan Mesin', 'Helm & Riding Gear'] },
+            { id: 'home-living', name: 'Home & Living', img: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400&q=80', desc: 'Rumah & Dekorasi', subs: ['Dekorasi Ruangan', 'Perlengkapan Dapur', 'Pencahayaan & Lampu', 'Furniture'] },
+            { id: 'sports-outdoor', name: 'Sports & Outdoor', img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400&q=80', desc: 'Olahraga & Camping', subs: ['Pakaian Olahraga', 'Alat Gym & Fitness', 'Perlengkapan Camping', 'Sepeda & Aksesoris'] },
+            { id: 'travel', name: 'Travel', img: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&q=80', desc: 'Wisata & Koper', subs: ['Koper & Tas Travel', 'Aksesoris Perjalanan', 'Tiket & Tour Package'] },
+            { id: 'finance', name: 'Finance', img: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&q=80', desc: 'Layanan Keuangan', subs: ['Kartu Kredit & Bank', 'Asuransi & Proteksi', 'Investasi & Tabungan'] },
+            { id: 'it-internet', name: 'IT & Internet', img: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&q=80', desc: 'Software & Hosting', subs: ['SaaS & Software', 'Hosting & Domain', 'Layanan Cloud & VPN'] },
+            { id: 'health-wellness', name: 'Health & Wellness', img: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&q=80', desc: 'Kesehatan & Suplemen', subs: ['Suplemen & Vitamin', 'Alat Kesehatan', 'Minyak Esensial & Relaksasi'] }
+        ];
+
+        categoriesData.forEach((cat, categoryIndex) => {
+            cat.img = makeCatalogTile(cat.name, categoryArt[cat.id] || '🛍️', categoryIndex);
+            cat.subs = cat.subs.map((name, subIndex) => ({
+                name,
+                img: makeCatalogTile(name, subcategoryArt[name] || '🛍️', 100 + categoryIndex * 10 + subIndex)
+            }));
+        });
+
+        const merchantsData = [
+            { id: 'Shopee', name: 'Shopee', color: 'bg-shopee' },
+            { id: 'Lazada', name: 'Lazada', color: 'bg-lazada' },
+            { id: 'Tokopedia', name: 'Tokopedia', color: 'bg-tokopedia' },
+            { id: 'TikTok Shop', name: 'TikTok Shop', color: 'bg-tiktok' }
+        ];
+
+        // Enam produk contoh awal; gambar akan diganti ilustrasi dummy unik di bawah ini.
+        const baseProducts = [
+            {
+                id: 101, 
+                title: "Wireless Noise Cancelling Headphones Bluetooth 5.3 High Fidelity Sound",
+                category: "tech-electronics", 
+                subCategory: "Audio & Headphone", 
+                merchant: "Shopee",
+                price: 499000, 
+                originalPrice: 899000, 
+                discount: 44, 
+                rating: 4.8, 
+                reviewsCount: 342, 
+                soldCount: "1.2k+", 
+                responseRate: "99% (Sangat Cepat)", 
+                affiliateUrl: "#",
+                images: [
+                    "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80",
+                    "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&q=80",
+                    "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=500&q=80",
+                    "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&q=80"
+                ],
+                description: "Audio jernih Hi-Fi dengan fitur Active Noise Cancellation (ANC) aktif, bass bertenaga, dan bantalan telinga busa empuk."
+            },
+            {
+                id: 102, 
+                title: "Smartwatch Sport AMOLED Display Waterproof Fitness Tracker",
+                category: "tech-electronics", 
+                subCategory: "Wearable Tech", 
+                merchant: "Lazada",
+                price: 650000, 
+                originalPrice: 1200000, 
+                discount: 45, 
+                rating: 4.9, 
+                reviewsCount: 512, 
+                soldCount: "2.5k+", 
+                responseRate: "98% (Sangat Cepat)", 
+                affiliateUrl: "#",
+                images: [
+                    "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80",
+                    "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=500&q=80",
+                    "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=500&q=80",
+                    "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=500&q=80"
+                ],
+                description: "Smartwatch layar AMOLED tajam, tahan air hingga 50 meter, pelacak detak jantung real-time, dan pemantau kualitas tidur."
+            },
+            {
+                id: 103, 
+                title: "Kemeja Kasual Pria Premium Cotton Slim Fit Lengan Panjang",
+                category: "fashion", 
+                subCategory: "Pakaian Pria", 
+                merchant: "Tokopedia",
+                price: 185000, 
+                originalPrice: 299000, 
+                discount: 38, 
+                rating: 4.7, 
+                reviewsCount: 189, 
+                soldCount: "850+", 
+                responseRate: "95% (Cepat)", 
+                affiliateUrl: "#",
+                images: [
+                    "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&q=80",
+                    "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=500&q=80",
+                    "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=500&q=80",
+                    "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&q=80"
+                ],
+                description: "Kemeja katun premium potongan Slim Fit adem, lembut di kulit, dan cocok digunakan untuk kerja maupun acara formal santai."
+            },
+            {
+                id: 104, 
+                title: "Serum Wajah Radiant Glow Vitamin C 30ml Pencerah & Anti-Aging",
+                category: "beauty", 
+                subCategory: "Skincare Wajah", 
+                merchant: "TikTok Shop",
+                price: 129000, 
+                originalPrice: 210000, 
+                discount: 38, 
+                rating: 4.9, 
+                reviewsCount: 890, 
+                soldCount: "5.4k+", 
+                responseRate: "100% (Instant)", 
+                affiliateUrl: "#",
+                images: [
+                    "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80",
+                    "https://images.unsplash.com/photo-1608248597261-83325803d36b?w=500&q=80",
+                    "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80",
+                    "https://images.unsplash.com/photo-1617897903246-719242758050?w=500&q=80"
+                ],
+                description: "Formula pencerah kulit nomor 1 terlaris dengan Pure Vitamin C & Niacinamide untuk menyamarkan noda hitam dan mencerahkan kulit."
+            },
+            {
+                id: 105, 
+                title: "Makanan Kucing Premium Salmon & Tuna Grain Free 1.2kg",
+                category: "pets", 
+                subCategory: "Makanan Kucing", 
+                merchant: "Shopee",
+                price: 85000, 
+                originalPrice: 130000, 
+                discount: 34, 
+                rating: 4.9, 
+                reviewsCount: 620, 
+                soldCount: "3.1k+", 
+                responseRate: "99% (Sangat Cepat)", 
+                affiliateUrl: "#",
+                images: [
+                    "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=500&q=80",
+                    "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=500&q=80",
+                    "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&q=80",
+                    "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=500&q=80"
+                ],
+                description: "Makanan kucing bernutrisi tinggi tanpa biji-bijian (grain-free) dengan kandungan daging salmon segar untuk menjaga bulu lebat dan halus."
+            },
+            {
+                id: 106, 
+                title: "Helm Full Face Retro Matte Black Sertifikasi SNI & DOT",
+                category: "automotive", 
+                subCategory: "Helm & Riding Gear", 
+                merchant: "Tokopedia",
+                price: 450000, 
+                originalPrice: 750000, 
+                discount: 40, 
+                rating: 4.8, 
+                reviewsCount: 230, 
+                soldCount: "1.5k+", 
+                responseRate: "97% (Sangat Cepat)", 
+                affiliateUrl: "#",
+                images: [
+                    "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=500&q=80",
+                    "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=500&q=80",
+                    "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&q=80",
+                    "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=500&q=80"
+                ],
+                description: "Helm retro klasik berbahan batok ABS kuat, dilapisi warna hitam doff premium, busa dalam knock-down yang mudah dilepas dan dicuci."
+            }
+        ];
+
+        // Satu produk dummy untuk SETIAP subkategori, termasuk yang sebelumnya kosong.
+        // Semua gambar produk dan thumbnail dibuat unik per produk; tidak memakai URL gambar yang berulang.
+        const productsData = [...baseProducts];
+        const existingSubCategories = new Set(productsData.map(p => p.subCategory));
+        let nextDummyId = 1000;
+        const productEmoji = {
+            'fashion':'🛍️','beauty':'🧴','tech-electronics':'🎧','pets':'🐾','food':'🍜',
+            'hobbies-arts-crafts':'🎨','pc-mobile-games':'🎮','books-education':'📚','automotive':'🚘',
+            'home-living':'🛋️','sports-outdoor':'🏕️','travel':'🧳','finance':'💳','it-internet':'💻','health-wellness':'🩺'
+        };
+        categoriesData.forEach((cat, categoryIndex) => {
+            cat.subs.forEach((sub, subIndex) => {
+                if (existingSubCategories.has(sub.name)) return;
+                const id = nextDummyId++;
+                const price = 25000 + ((categoryIndex * 17 + subIndex * 11) % 40) * 12500;
+                productsData.push({
+                    id,
+                    title: `Produk Dummy ${sub.name} — Pilihan ${String(subIndex + 1).padStart(2, '0')}`,
+                    category: cat.id,
+                    subCategory: sub.name,
+                    merchant: merchantsData[(categoryIndex + subIndex) % merchantsData.length].id,
+                    price,
+                    originalPrice: Math.round(price * 1.35),
+                    discount: 26,
+                    rating: 4.5 + ((categoryIndex + subIndex) % 5) / 10,
+                    reviewsCount: 12 + ((categoryIndex * 31 + subIndex * 19) % 400),
+                    soldCount: `${10 + ((categoryIndex * 7 + subIndex * 13) % 900)}+`,
+                    responseRate: 'Data dummy',
+                    affiliateUrl: '#',
+                    images: [],
+                    description: `Contoh produk dummy untuk subkategori ${sub.name}. Gambar ilustrasi hanya untuk mengisi tampilan katalog dan bukan foto produk asli.`
+                });
+                existingSubCategories.add(sub.name);
+            });
+        });
+
+        // Ganti seluruh foto produk dan thumbnail dengan ilustrasi khusus yang unik.
+        // Setiap kartu punya 1 gambar utama + 3 thumbnail berbeda dan tidak berbagi gambar dengan produk lain.
+        let uniqueProductImageIndex = 1000;
+        productsData.forEach(product => {
+            const cat = categoriesData.find(c => c.id === product.category);
+            const emoji = (cat && categoryArt[cat.id]) || '🛍️';
+            product.images = [0, 1, 2, 3].map(viewIndex => {
+                const imageIndex = uniqueProductImageIndex++;
+                const viewLabel = viewIndex === 0 ? 'Produk' : `Tampilan ${viewIndex + 1}`;
+                return makeCatalogTile(`${product.subCategory} · ${viewLabel} #${product.id}`, emoji, imageIndex);
+            });
+        });
+
+        let activeCategory = 'all';
+        let selectedMerchants = [];
+        let selectedSubCategories = [];
+        let minPrice = null;
+        let maxPrice = null;
+        let minRating = 0;
+        let searchQuery = '';
+        let sortBy = 'featured';
+        const FAVORITES_STORAGE_KEY = 'SYAILENDRA_FAVORITES_V1';
+        let favorites = loadFavorites();
+        let currentProductId = null;
+        const CART_STORAGE_KEY = 'SYAILENDRA_CART_V1';
+        let cartItems = loadCartItems();
+        let currentPage = 1;
+        const itemsPerPage = 60;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initClock();
+            setInterval(updateClock, 1000);
+            updateClock();
+            renderCategories();
+            renderMerchantFilters();
+            renderSubCategoryFilters();
+            filterAndRenderProducts();
+            setupScrollControls();
+            setupEventListeners();
+            document.getElementById('favCount').textContent = String(favorites.length);
+            renderCart();
+        });
+
+        function initClock() {
+            const markers = document.getElementById('clock-markers');
+            for (let i = 0; i < 60; i++) {
+                const mark = document.createElement('span');
+                mark.style.transform = `translate(-50%, -50%) rotate(${i * 6}deg)`;
+                mark.className = (i % 5 === 0) ? 'hour-mark' : 'min-mark';
+                markers.appendChild(mark);
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const s = now.getSeconds();
+            const m = now.getMinutes();
+            const h = now.getHours();
+            document.getElementById('s-hand').style.transform = `translateX(-50%) rotate(${s * 6}deg)`;
+            document.getElementById('m-hand').style.transform = `translateX(-50%) rotate(${m * 6 + s * 0.1}deg)`;
+            document.getElementById('h-hand').style.transform = `translateX(-50%) rotate(${h * 30 + m * 0.5}deg)`;
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => console.log(err.message));
+                document.getElementById('fs-icon').classList.replace('fa-expand', 'fa-compress');
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    document.getElementById('fs-icon').classList.replace('fa-compress', 'fa-expand');
+                }
+            }
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categorySlider');
+            const fixedBtn = document.getElementById('allSectorFixedBtn');
+            
+            if (activeCategory === 'all') {
+                fixedBtn.className = "cat-fixed-card shrink-0 cursor-pointer titanium-3d-card flex flex-col items-center p-3 z-10 titanium-3d-active";
+            } else {
+                fixedBtn.className = "cat-fixed-card shrink-0 cursor-pointer titanium-3d-card flex flex-col items-center p-3 text-slate-900 z-10";
+            }
+
+            let html = '';
+            categoriesData.forEach(cat => {
+                const isActive = activeCategory === cat.id;
+                html += `
+                    <div onclick="selectCategory('${cat.id}')" 
+                         class="cat-item-card shrink-0 cursor-pointer titanium-3d-card flex flex-col items-center p-[8.5px] transition-all duration-200 ${isActive ? 'titanium-3d-active' : ''}">
+                        <div class="category-image-box rounded-2xl overflow-hidden mb-2 shadow-sm border border-slate-200 bg-white">
+                            <img src="${cat.img}" alt="${cat.name}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                        </div>
+                        <span class="category-label text-xs sm:text-sm font-bold text-center">${cat.name}</span>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function setupScrollControls() {
+            const slider = document.getElementById('categorySlider');
+            document.getElementById('scrollLeftBtn').addEventListener('click', () => slider.scrollBy({ left: -300, behavior: 'smooth' }));
+            document.getElementById('scrollRightBtn').addEventListener('click', () => slider.scrollBy({ left: 300, behavior: 'smooth' }));
+        }
+
+        function selectCategory(catId) {
+            activeCategory = catId;
+            selectedSubCategories = [];
+            currentPage = 1;
+            renderCategories();
+            renderSubCategoryFilters();
+            filterAndRenderProducts();
+        }
+
+        function renderMerchantFilters() {
+            const container = document.getElementById('merchantFilterContainer');
+            container.innerHTML = merchantsData.map(m => `
+                <label class="flex items-center gap-3 cursor-pointer text-slate-700 hover:text-slate-950">
+                    <input type="checkbox" value="${m.id}" onchange="toggleMerchant('${m.id}')" class="rounded text-amber-500 focus:ring-amber-500 w-4 h-4">
+                    <span class="font-medium text-sm">${m.name}</span>
+                </label>
+            `).join('');
+        }
+
+        function renderSubCategoryFilters() {
+            const container = document.getElementById('subCategoryFilterContainer');
+            let subsToRender = [];
+
+            if (activeCategory === 'all') {
+                categoriesData.forEach(c => subsToRender.push(...c.subs));
+            } else {
+                const catObj = categoriesData.find(c => c.id === activeCategory);
+                if (catObj) subsToRender = catObj.subs;
+            }
+
+            container.innerHTML = subsToRender.map(sub => `
+                <label class="flex items-center gap-2.5 cursor-pointer text-slate-700 hover:text-slate-950 min-w-0">
+                    <input type="checkbox" value="${sub.name}" onchange="toggleSubCategory('${sub.name.replace(/'/g, "\\'")}')" ${selectedSubCategories.includes(sub.name) ? 'checked' : ''} class="rounded text-amber-500 focus:ring-amber-500 w-3.5 h-3.5 shrink-0">
+                    <img src="${sub.img}" alt="Ilustrasi ${sub.name}" loading="lazy" class="w-10 h-10 rounded-lg object-cover border border-slate-200 shrink-0" />
+                    <span class="subcat-text-item font-medium min-w-0">${sub.name}</span>
+                </label>
+            `).join('');
+        }
+
+        function toggleMerchant(merchantId) {
+            selectedMerchants = selectedMerchants.includes(merchantId) 
+                ? selectedMerchants.filter(m => m !== merchantId) 
+                : [...selectedMerchants, merchantId];
+            currentPage = 1;
+            filterAndRenderProducts();
+        }
+
+        function toggleSubCategory(sub) {
+            selectedSubCategories = selectedSubCategories.includes(sub)
+                ? selectedSubCategories.filter(s => s !== sub)
+                : [...selectedSubCategories, sub];
+            currentPage = 1;
+            filterAndRenderProducts();
+        }
+
+        function filterAndRenderProducts() {
+            let result = [...productsData];
+
+            if (activeCategory !== 'all') result = result.filter(p => p.category === activeCategory);
+            if (selectedMerchants.length > 0) result = result.filter(p => selectedMerchants.includes(p.merchant));
+            if (selectedSubCategories.length > 0) result = result.filter(p => selectedSubCategories.includes(p.subCategory));
+            if (minPrice !== null && !isNaN(minPrice)) result = result.filter(p => p.price >= minPrice);
+            if (maxPrice !== null && !isNaN(maxPrice)) result = result.filter(p => p.price <= maxPrice);
+            if (minRating > 0) result = result.filter(p => p.rating >= minRating);
+            if (searchQuery.trim() !== '') {
+                const q = searchQuery.toLowerCase();
+                result = result.filter(p => String(p.title || '').toLowerCase().includes(q) || String(p.subCategory || '').toLowerCase().includes(q));
+            }
+            if (document.getElementById('filterCOD')?.checked) result = result.filter(p => p.isCOD === true);
+            if (document.getElementById('filterFreeShipping')?.checked) result = result.filter(p => p.freeShipping === true);
+            if (document.getElementById('filterSale')?.checked) result = result.filter(p => p.isSale === true);
+
+            const soldNumber = p => {
+                if (typeof p.soldCount === 'number') return p.soldCount;
+                const raw = String(p.soldCount || '').toLowerCase().replace(/,/g, '.');
+                const match = raw.match(/[0-9]+(?:\.[0-9]+)?/);
+                if (!match) return 0;
+                const n = Number(match[0]);
+                return raw.includes('k') ? n * 1000 : raw.includes('rb') ? n * 1000 : n;
+            };
+            if (sortBy === 'newest') result.sort((a, b) => {
+                const da = Date.parse(a.createdAt || a.dateAdded || '') || 0;
+                const db = Date.parse(b.createdAt || b.dateAdded || '') || 0;
+                return db - da || Number(b.id || 0) - Number(a.id || 0);
+            });
+            else if (sortBy === 'favorites') result = result.filter(p => favorites.includes(p.id));
+            else if (sortBy === 'bestselling') result.sort((a, b) => soldNumber(b) - soldNumber(a));
+            else if (sortBy === 'discount') result.sort((a, b) => Number(b.discount || 0) - Number(a.discount || 0));
+            else if (sortBy === 'price-low') result.sort((a, b) => a.price - b.price);
+            else if (sortBy === 'price-high') result.sort((a, b) => b.price - a.price);
+            else if (sortBy === 'rating') result.sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
+
+            document.getElementById('productCount').textContent = result.length;
+            const emptyEl = document.getElementById('emptyState');
+            const grid = document.getElementById('productGrid');
+            const paginationEl = document.getElementById('paginationContainer');
+
+            if (result.length === 0) {
+                emptyEl.textContent = sortBy === 'favorites' && favorites.length === 0
+                    ? 'Belum ada produk favorit. Tekan ikon hati pada produk untuk menyimpannya.'
+                    : 'Produk tidak ditemukan. Coba ubah kata kunci atau filter.';
+                grid.innerHTML = '';
+                paginationEl.innerHTML = '';
+                emptyEl.classList.remove('hidden');
+                return;
+            }
+
+            emptyEl.classList.add('hidden');
+
+            const totalPages = Math.ceil(result.length / itemsPerPage);
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedItems = result.slice(startIndex, endIndex);
+
+            grid.innerHTML = paginatedItems.map(product => {
+                const isFav = favorites.includes(product.id);
+                const merchantObj = merchantsData.find(m => m.id === product.merchant) || { color: 'bg-slate-700' };
+                const max4Images = product.images.slice(0, 4);
+
+                return `
+                    <div class="titanium-3d-card p-2 sm:p-3 flex flex-col justify-between group cursor-pointer" onclick="openQuickView(${product.id})">
+                        <div class="space-y-0">
+                            <div class="relative aspect-square w-full overflow-hidden">
+                                <img id="prod-img-${product.id}" src="${product.images[0]}" alt="${product.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                <span class="absolute top-2.5 left-2.5 ${merchantObj.color} text-white font-black text-[9px] px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow">
+                                    ${product.merchant}
+                                </span>
+                                <span class="absolute top-2.5 right-2.5 bg-red-500 text-white font-black text-[10px] px-2 py-0.5 rounded shadow">
+                                    -${product.discount}%
+                                </span>
+                                <button onclick="event.stopPropagation(); toggleFavorite(${product.id})" class="absolute bottom-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 text-slate-700 hover:text-red-500 flex items-center justify-center shadow transition-colors">
+                                    <i class="${isFav ? 'fa-solid text-red-500' : 'fa-regular'} fa-heart text-xs"></i>
+                                </button>
+                            </div>
+
+                            <div class="hidden grid grid-cols-4 gap-2 py-1" aria-hidden="true">
+                                ${max4Images.map(img => `
+                                    <img src="${img}" 
+                                         onmouseover="event.stopPropagation(); changeCardImage(${product.id}, '${img}')"
+                                         onclick="event.stopPropagation(); changeCardImage(${product.id}, '${img}')"
+                                         class="w-12 h-12 rounded-lg object-cover border-2 border-slate-200 hover:border-amber-500 shrink-0 opacity-80 hover:opacity-100 shadow-sm transition-all">
+                                `).join('')}
+                            </div>
+
+                            <div>
+                                <span class="text-[9px] font-extrabold text-amber-600 uppercase tracking-wider block">${product.subCategory}</span>
+                                <h3 class="font-bold text-slate-900 text-sm leading-snug line-clamp-2 group-hover:text-amber-600 transition-colors">
+                                    ${product.title}
+                                </h3>
+                                <div class="flex items-center gap-1 text-xs text-amber-400 pt-0 leading-none">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span class="font-extrabold text-slate-800">${product.rating}</span>
+                                    <span class="text-slate-400">(${product.reviewsCount})</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-0 mt-0 border-t-0 space-y-1">
+                            <div>
+                                <div class="text-slate-400 line-through text-[10px] leading-none">Rp ${product.originalPrice.toLocaleString('id-ID')}</div>
+                                <div class="text-sm sm:text-base font-black text-amber-600 leading-tight">Rp ${product.price.toLocaleString('id-ID')}</div>
+                            </div>
+                            <a href="#" onclick="return buyProduct(${product.id}, event)" class="block w-full text-center bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs py-2 rounded-lg shadow transition-all uppercase">
+                                Beli Sekarang
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            renderPaginationControls(totalPages);
+        }
+
+        function renderPaginationControls(totalPages) {
+            const container = document.getElementById('paginationContainer');
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = `
+                <button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled class="opacity-40 cursor-not-allowed"' : ''} class="px-4 py-2.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-base shadow-sm transition-all">
+                    <i class="fa-solid fa-chevron-left mr-1.5"></i> Prev
+                </button>
+            `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    html += `
+                        <button onclick="changePage(${i})" class="px-4.5 py-2.5 rounded-lg font-bold text-base shadow-sm transition-all ${currentPage === i ? 'bg-amber-500 text-slate-950 border border-amber-600' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'}">
+                            ${i}
+                        </button>
+                    `;
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    html += `<span class="px-2 text-slate-400 font-bold text-base">...</span>`;
+                }
+            }
+
+            html += `
+                <button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled class="opacity-40 cursor-not-allowed"' : ''} class="px-4 py-2.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-base shadow-sm transition-all">
+                    Next <i class="fa-solid fa-chevron-right ml-1.5"></i>
+                </button>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function changePage(targetPage) {
+            currentPage = targetPage;
+            filterAndRenderProducts();
+            window.scrollTo({ top: 100, behavior: 'smooth' });
+        }
+
+        function changeCardImage(productId, newSrc) {
+            const imgEl = document.getElementById(`prod-img-${productId}`);
+            if (imgEl) imgEl.src = newSrc;
+        }
+
+        function openQuickView(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+            currentProductId = product.id;
+
+            const modal = document.getElementById('quickViewModal');
+            document.getElementById('modalMainImg').src = product.images[0];
+            document.getElementById('modalTitle').textContent = product.title;
+            document.getElementById('modalCategory').textContent = `${product.category} / ${product.subCategory}`;
+            document.getElementById('modalPrice').textContent = `Rp ${product.price.toLocaleString('id-ID')}`;
+            document.getElementById('modalOriginalPrice').textContent = `Rp ${product.originalPrice.toLocaleString('id-ID')}`;
+            document.getElementById('modalDescription').textContent = product.description;
+            const modalBuyBtn = document.getElementById('modalBuyBtn');
+            modalBuyBtn.href = '#';
+            modalBuyBtn.onclick = (event) => buyProduct(product.id, event);
+            document.getElementById('modalRatingVal').textContent = `${product.rating} / 5.0`;
+            document.getElementById('modalSoldVal').textContent = product.soldCount || "1.0k+";
+            document.getElementById('modalResponseVal').textContent = product.responseRate || "99% (Sangat Cepat)";
+
+            const merchantObj = merchantsData.find(m => m.id === product.merchant) || { color: 'bg-slate-700' };
+            const mBadge = document.getElementById('modalMerchantBadge');
+            mBadge.textContent = product.merchant;
+            mBadge.className = `text-xs font-bold uppercase px-3 py-1 rounded-full text-white ${merchantObj.color}`;
+            
+            document.getElementById('modalDiscountBadge').textContent = `-${product.discount}%`;
+
+            const max4Images = product.images.slice(0, 4);
+            document.getElementById('modalThumbnails').innerHTML = max4Images.map((img, index) => `
+                <div onclick="setModalMainImage('${img}', this)" class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 cursor-pointer transition-all shrink-0 ${index === 0 ? 'border-amber-500 scale-95 shadow-md' : 'border-slate-200 opacity-70 hover:opacity-100'}">
+                    <img src="${img}" class="w-full h-full object-cover">
+                </div>
+            `).join('');
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.firstElementChild.classList.remove('scale-95');
+            modal.firstElementChild.classList.add('scale-100');
+        }
+
+        function setModalMainImage(src, element) {
+            document.getElementById('modalMainImg').src = src;
+            Array.from(element.parentElement.children).forEach(child => {
+                child.className = 'w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 cursor-pointer transition-all border-slate-200 opacity-70 hover:opacity-100 shrink-0';
+            });
+            element.className = 'w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 cursor-pointer transition-all border-amber-500 scale-95 shadow-md opacity-100 shrink-0';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('quickViewModal');
+            modal.firstElementChild.classList.remove('scale-100');
+            modal.firstElementChild.classList.add('scale-95');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function buyProduct(productId, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            const product = productsData.find(p => p.id === productId);
+            const url = String(product?.affiliateUrl || product?.productUrl || '').trim();
+            if (!url || url === '#' || !/^https?:\/\//i.test(url)) {
+                alert('Tautan pembelian untuk produk ini belum tersedia. Produk ini masih berupa data contoh, jadi belum bisa dibeli dari sini.');
+                return false;
+            }
+            const opened = window.open(url, '_blank', 'noopener,noreferrer');
+            if (!opened) alert('Browser memblokir tab baru. Izinkan pop-up untuk membuka halaman produk.');
+            return false;
+        }
+
+        function loadFavorites() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]');
+                return Array.isArray(saved) ? [...new Set(saved.map(Number).filter(Number.isFinite))] : [];
+            } catch (error) { return []; }
+        }
+
+        function saveFavorites() {
+            try { localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites)); }
+            catch (error) { /* Favorites remain usable for this page session if storage is unavailable. */ }
+        }
+
+        function loadCartItems() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || '[]');
+                return Array.isArray(saved) ? saved.filter(item => item && Number.isFinite(Number(item.productId)) && Number(item.quantity) > 0).map(item => ({ productId: Number(item.productId), quantity: Math.max(1, Math.floor(Number(item.quantity))) })) : [];
+            } catch (error) { return []; }
+        }
+
+        function saveCartItems() {
+            try { localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems)); }
+            catch (error) { alert('Keranjang tidak bisa disimpan di browser ini. Periksa pengaturan penyimpanan browser.'); }
+            renderCart();
+        }
+
+        function cartQuantity() {
+            return cartItems.reduce((total, item) => total + item.quantity, 0);
+        }
+
+        function addToCart() {
+            const product = productsData.find(p => p.id === currentProductId);
+            if (!product) { alert('Pilih produk terlebih dahulu.'); return; }
+            const existing = cartItems.find(item => item.productId === product.id);
+            if (existing) existing.quantity += 1;
+            else cartItems.push({ productId: product.id, quantity: 1 });
+            saveCartItems();
+            closeModal();
+            openCart();
+        }
+
+        function renderCart() {
+            const count = document.getElementById('cartCount');
+            const itemsBox = document.getElementById('cartItems');
+            const subtotalBox = document.getElementById('cartSubtotal');
+            if (count) count.textContent = String(cartQuantity());
+            if (!itemsBox || !subtotalBox) return;
+            let subtotal = 0;
+            const validItems = cartItems.map(item => ({ item, product: productsData.find(product => product.id === item.productId) })).filter(row => row.product);
+            if (!validItems.length) {
+                itemsBox.innerHTML = '<p class="py-10 text-center text-sm text-slate-500">Keranjang masih kosong. Pilih produk lalu tekan “Masukkan Keranjang”.</p>';
+                subtotalBox.textContent = 'Rp 0';
+                return;
+            }
+            itemsBox.innerHTML = validItems.map(({item, product}) => {
+                subtotal += product.price * item.quantity;
+                const safeTitle = String(product.title).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+                return `<div class="cart-item-row"><img src="${product.images[0]}" alt=""><div class="min-w-0"><div class="font-bold text-sm text-slate-900 leading-snug">${safeTitle}</div><div class="text-sm font-black text-amber-600 mt-1">Rp ${product.price.toLocaleString('id-ID')}</div><div class="flex items-center gap-2 mt-2"><button type="button" onclick="changeCartQuantity(${product.id}, -1)" class="w-7 h-7 rounded-md border border-slate-300 font-black" aria-label="Kurangi jumlah">−</button><span class="text-sm font-bold min-w-4 text-center">${item.quantity}</span><button type="button" onclick="changeCartQuantity(${product.id}, 1)" class="w-7 h-7 rounded-md border border-slate-300 font-black" aria-label="Tambah jumlah">+</button></div></div><button type="button" onclick="removeCartItem(${product.id})" class="text-xs font-bold text-rose-600 hover:underline">Hapus</button></div>`;
+            }).join('');
+            subtotalBox.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+        }
+
+        function changeCartQuantity(productId, delta) {
+            const item = cartItems.find(entry => entry.productId === productId);
+            if (!item) return;
+            item.quantity += delta;
+            if (item.quantity <= 0) cartItems = cartItems.filter(entry => entry.productId !== productId);
+            saveCartItems();
+        }
+
+        function removeCartItem(productId) {
+            cartItems = cartItems.filter(item => item.productId !== productId);
+            saveCartItems();
+        }
+
+        function clearCart() {
+            if (!cartItems.length) return;
+            cartItems = [];
+            saveCartItems();
+        }
+
+        function openCart() {
+            renderCart();
+            const modal = document.getElementById('cartModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function takeScreenshot() {
+            alert('📸 Fitur Screen Shot Siap! Gambar produk & detail berhasil diproses.');
+        }
+
+        function toggleFavorite(productId) {
+            favorites = favorites.includes(productId) ? favorites.filter(id => id !== productId) : [...favorites, productId];
+            saveFavorites();
+            document.getElementById('favCount').textContent = String(favorites.length);
+            filterAndRenderProducts();
+        }
+
+        function setupEventListeners() {
+            document.getElementById('cartBtn').addEventListener('click', openCart);
+            document.getElementById('favoriteBtn').addEventListener('click', () => {
+                const select = document.getElementById('sortSelect');
+                sortBy = sortBy === 'favorites' ? 'featured' : 'favorites';
+                select.value = sortBy;
+                currentPage = 1;
+                filterAndRenderProducts();
+                if (sortBy === 'favorites' && favorites.length === 0) {
+                    const emptyEl = document.getElementById('emptyState');
+                    if (emptyEl) emptyEl.textContent = 'Belum ada produk favorit. Tekan ikon hati pada produk untuk menyimpannya.';
+                }
+            });
+            document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+            document.getElementById('continueShoppingBtn').addEventListener('click', closeCart);
+            document.getElementById('clearCartBtn').addEventListener('click', clearCart);
+            document.getElementById('cartModal').addEventListener('click', event => { if (event.target.id === 'cartModal') closeCart(); });
+            document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+            document.getElementById('quickViewModal').addEventListener('click', (e) => {
+                if (e.target.id === 'quickViewModal') closeModal();
+            });
+
+            const searchInput = document.getElementById('searchInput');
+            const voiceBtn = document.getElementById('voiceSearchBtn');
+            voiceBtn.addEventListener('click', () => {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) {
+                    alert('Pencarian suara belum didukung browser ini. Coba gunakan Chrome terbaru dan izinkan akses mikrofon.');
+                    return;
+                }
+                const recognition = new SpeechRecognition();
+                recognition.lang = 'id-ID';
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+                voiceBtn.disabled = true;
+                voiceBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i><span class="tool-label">Dengar...</span>';
+                recognition.onresult = (event) => {
+                    const spokenText = event.results?.[0]?.[0]?.transcript || '';
+                    searchInput.value = spokenText;
+                    searchQuery = spokenText;
+                    currentPage = 1;
+                    filterAndRenderProducts();
+                };
+                recognition.onerror = (event) => {
+                    if (event.error !== 'no-speech' && event.error !== 'aborted') alert('Pencarian suara gagal: ' + event.error);
+                };
+                recognition.onend = () => {
+                    voiceBtn.disabled = false;
+                    voiceBtn.innerHTML = '<i class="fa-solid fa-microphone"></i><span class="tool-label">Suara</span>';
+                };
+                try { recognition.start(); } catch (error) {
+                    voiceBtn.disabled = false;
+                    voiceBtn.innerHTML = '<i class="fa-solid fa-microphone"></i><span class="tool-label">Suara</span>';
+                    alert('Mikrofon belum dapat diaktifkan.');
+                }
+            });
+
+            const imageInput = document.getElementById('imageSearchInput');
+            const imageModal = document.getElementById('imageSearchModal');
+            const imagePreview = document.getElementById('imageSearchPreview');
+            const imageMessage = document.getElementById('imageSearchMessage');
+            const closeImageModal = () => imageModal.classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('imageSearchBtn').addEventListener('click', () => imageInput.click());
+            document.getElementById('chooseAnotherImageBtn').addEventListener('click', () => imageInput.click());
+            document.getElementById('closeImageSearchBtn').addEventListener('click', closeImageModal);
+            document.getElementById('closeImageSearchBtn2').addEventListener('click', closeImageModal);
+            imageModal.addEventListener('click', (event) => { if (event.target === imageModal) closeImageModal(); });
+            imageInput.addEventListener('change', () => {
+                const file = imageInput.files && imageInput.files[0];
+                if (!file) return;
+                if (!file.type.startsWith('image/')) {
+                    alert('Pilih file gambar seperti JPG, PNG, atau WEBP.');
+                    imageInput.value = '';
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = () => {
+                    imagePreview.src = reader.result;
+                    imagePreview.classList.remove('hidden');
+                    imageMessage.textContent = 'Gambar "' + file.name + '" berhasil dipilih. Antarmuka siap, tetapi pencocokan otomatis dengan produk belum aktif karena backend pencarian visual belum terhubung.';
+                    imageModal.classList.remove('opacity-0', 'pointer-events-none');
+                };
+                reader.onerror = () => alert('Gambar tidak dapat dibaca. Coba pilih file lain.');
+                reader.readAsDataURL(file);
+            });
+
+            document.getElementById('searchBtn').addEventListener('click', () => {
+                searchQuery = searchInput.value;
+                currentPage = 1;
+                filterAndRenderProducts();
+            });
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchQuery = searchInput.value;
+                    currentPage = 1;
+                    filterAndRenderProducts();
+                }
+            });
+
+            document.getElementById('sortSelect').addEventListener('change', (e) => {
+                sortBy = e.target.value;
+                currentPage = 1;
+                filterAndRenderProducts();
+            });
+
+            document.getElementById('ratingSelect').addEventListener('change', (e) => {
+                minRating = parseFloat(e.target.value);
+                currentPage = 1;
+                filterAndRenderProducts();
+            });
+
+            ['filterCOD', 'filterFreeShipping', 'filterSale'].forEach(id => {
+                document.getElementById(id).addEventListener('change', () => { currentPage = 1; filterAndRenderProducts(); });
+            });
+
+            document.getElementById('applyPriceBtn').addEventListener('click', () => {
+                const minVal = parseFloat(document.getElementById('minPriceInput').value);
+                const maxVal = parseFloat(document.getElementById('maxPriceInput').value);
+                minPrice = isNaN(minVal) ? null : minVal;
+                maxPrice = isNaN(maxVal) ? null : maxVal;
+                currentPage = 1;
+                filterAndRenderProducts();
+            });
+
+            document.getElementById('resetFilterBtn').addEventListener('click', () => {
+                activeCategory = 'all';
+                selectedMerchants = [];
+                selectedSubCategories = [];
+                minPrice = null;
+                maxPrice = null;
+                minRating = 0;
+                searchQuery = '';
+                sortBy = 'featured';
+                currentPage = 1;
+
+                document.getElementById('searchInput').value = '';
+                document.getElementById('minPriceInput').value = '';
+                document.getElementById('maxPriceInput').value = '';
+                document.getElementById('ratingSelect').value = '0';
+                document.getElementById('sortSelect').value = 'featured';
+                document.getElementById('filterCOD').checked = false;
+                document.getElementById('filterFreeShipping').checked = false;
+                document.getElementById('filterSale').checked = false;
+
+                renderCategories();
+                renderMerchantFilters();
+                renderSubCategoryFilters();
+                filterAndRenderProducts();
+            });
+        }
+    </script>
+<script>
+/* Kategori selalu aktif di HP dan komputer; judul bukan tombol sembunyi/tampil. */
+(() => {
+    const button = document.getElementById('categoryToggleBtn');
+    const panel = document.getElementById('categoryPanel');
+    const chevron = document.getElementById('categoryToggleChevron');
+    if (panel) panel.classList.remove('category-panel-mobile-collapsed');
+    if (button) {
+        button.setAttribute('aria-expanded', 'true');
+        button.setAttribute('aria-label', 'Kategori selalu aktif');
+        button.addEventListener('click', event => event.preventDefault());
+    }
+    if (chevron) chevron.style.display = 'none';
+})();
+</script>
+<script>
+/* Sidebar filter: di HP/tablet bisa dibuka-tutup; di desktop selalu terlihat. */
+(() => {
+    const button = document.getElementById('mobileSidebarToggleBtn');
+    const sidebar = document.getElementById('productFilterSidebar');
+    if (!button || !sidebar) return;
+    const compactQuery = window.matchMedia('(max-width: 1023px)');
+    const sync = () => {
+        if (compactQuery.matches) {
+            sidebar.classList.add('mobile-sidebar-collapsed');
+            button.setAttribute('aria-expanded', 'false');
+            button.setAttribute('aria-label', 'Tampilkan sidebar filter');
+        } else {
+            sidebar.classList.remove('mobile-sidebar-collapsed');
+            button.setAttribute('aria-expanded', 'true');
+            button.setAttribute('aria-label', 'Sidebar filter selalu aktif di komputer');
+        }
+    };
+    button.addEventListener('click', () => {
+        if (!compactQuery.matches) return;
+        const open = sidebar.classList.contains('mobile-sidebar-collapsed');
+        sidebar.classList.toggle('mobile-sidebar-collapsed', !open);
+        button.setAttribute('aria-expanded', String(open));
+        button.setAttribute('aria-label', open ? 'Sembunyikan sidebar filter' : 'Tampilkan sidebar filter');
+    });
+    if (compactQuery.addEventListener) compactQuery.addEventListener('change', sync);
+    else compactQuery.addListener(sync);
+    sync();
+})();
+</script>
+<script>
+/* Ukur tinggi header supaya konten tidak tertutup, termasuk pada layar kecil. */
+(() => {
+    const header = document.querySelector('.titanium-header-bar');
+    if (!header) return;
+    let frame = 0;
+    const update = () => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+            document.documentElement.style.setProperty('--titanium-header-space', (Math.ceil(header.getBoundingClientRect().height) + 12) + 'px');
+        });
+    };
+    if ('ResizeObserver' in window) new ResizeObserver(update).observe(header);
+    window.addEventListener('resize', update, { passive: true });
+    window.addEventListener('load', update, { once: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(update).catch(() => {});
+    update();
+})();
+</script>
+
+<script>
+function showSocialProcessing(platform) {
+    alert('Dalam Pemrosesan\n\nTautan ' + platform + ' untuk Toko Syailendra sedang disiapkan.');
+}
+</script>
+
+<script>
+/* Konten informasi footer. Sesuaikan bagian kontak/kebijakan sebelum publikasi resmi. */
+(() => {
+    const info = {
+        about: { title: 'Tentang Toko Syailendra', body: '<h3 class="text-lg font-bold text-white mb-2">Temukan Pilihan Terbaik, Hadirkan Nilai Lebih</h3><p class="mb-3">Toko Syailendra adalah katalog belanja digital independen yang membantu Anda menemukan produk dari berbagai kategori dan platform merchant dalam pengalaman yang lebih praktis.</p><h4 class="font-bold text-white mt-4 mb-1">Jelajahi Dunia Belanja dalam Satu Katalog</h4><p class="mb-3">Telusuri pilihan fashion, teknologi, kebutuhan rumah, kecantikan, hobi, olahraga, dan beragam kebutuhan lainnya. Kategori serta fitur pencarian dirancang agar Anda lebih mudah menemukan produk yang sesuai.</p><h4 class="font-bold text-white mt-4 mb-1">Pilihan yang Lebih Luas, Peluang yang Lebih Beragam</h4><p class="mb-3">Katalog ini menyatukan penjelajahan berbagai produk dalam satu tempat. Gunakan informasi yang tersedia sebagai referensi, lalu periksa detail produk pada halaman merchant sebelum mengambil keputusan.</p><h4 class="font-bold text-white mt-4 mb-1">Belanja dengan Pertimbangan yang Matang</h4><p class="mb-3">Harga, stok, variasi, promosi, pembayaran, pengiriman, dan layanan dapat berubah mengikuti ketentuan merchant. Pastikan Anda memeriksa informasi terbaru di platform tujuan sebelum bertransaksi.</p><h4 class="font-bold text-white mt-4 mb-1">Pengalaman Menjelajah yang Lebih Praktis</h4><p class="mb-3">Fitur pencarian, kategori, penyaringan, dan pengurutan membantu Anda menjelajahi katalog dengan lebih terarah.</p><h4 class="font-bold text-white mt-4 mb-1">Tentang Independensi Toko Syailendra</h4><p class="mb-3">Toko Syailendra merupakan katalog independen, bukan marketplace atau situs resmi Shopee, Lazada, Tokopedia, maupun TikTok Shop. Toko Syailendra tidak dimiliki, dioperasikan, disponsori, atau secara resmi berafiliasi dengan platform tersebut. Nama platform hanya digunakan untuk mengidentifikasi tujuan tautan produk.</p><p class="font-semibold text-amber-400">Toko Syailendra — Lebih Mudah Menjelajah. Lebih Luas Menemukan Pilihan.</p>' },
+        affiliate: { title: 'Transparansi Tautan & Afiliasi', body: '<p>Toko Syailendra adalah katalog independen dan bukan situs resmi, bukan pemilik, bukan operator, serta tidak mewakili Shopee, Lazada, Tokopedia, atau TikTok Shop.</p><p>Tautan produk dapat mengarahkan pengunjung ke situs pihak ketiga. Tautan hanya boleh disebut sebagai tautan afiliasi apabila program terkait telah disetujui dan tautan afiliasi yang valid benar-benar digunakan. Saat status itu belum berlaku, jangan menganggap Toko Syailendra menerima komisi atau memiliki kemitraan resmi dengan platform mana pun.</p><p>Nama dan merek platform disebut hanya untuk mengidentifikasi tujuan tautan; hak atas merek tersebut tetap milik pemiliknya.</p>' },
+        privacy: { title: 'Kebijakan Privasi', body: '<p>Gunakan katalog seperlunya dan hindari memasukkan data pribadi sensitif ke kolom pencarian.</p><p>Jika situs ini memakai penyimpanan browser, analitik, cookie, atau layanan pihak ketiga, rincian pengumpulan dan penggunaan data harus dicantumkan di sini sebelum situs dipublikasikan. Tautan merchant dapat tunduk pada kebijakan privasi masing-masing platform.</p><p><strong>Status:</strong> ringkasan ini merupakan draf awal; belum menggantikan kebijakan privasi final yang disesuaikan dengan layanan yang benar-benar aktif.</p>' },
+        terms: { title: 'Syarat & Ketentuan', body: '<p>Katalog disediakan untuk membantu penemuan produk. Detail, harga, stok, promosi, dan ketersediaan dapat berubah sewaktu-waktu dan perlu dikonfirmasi pada merchant.</p><p>Pesanan, pembayaran, pengiriman, pembatalan, pengembalian, garansi, dan layanan purnajual mengikuti ketentuan merchant tempat transaksi dilakukan. Jangan menganggap produk tersedia atau harga final sebelum dikonfirmasi di halaman merchant.</p><p>Pengunjung bertanggung jawab memeriksa spesifikasi produk dan ketentuan pembelian sebelum menyelesaikan transaksi.</p>' },
+        returns: { title: 'Pengiriman, Pengembalian & Refund', body: '<p>Jika pembelian dilakukan di platform merchant, proses pembayaran, pengiriman, pembatalan, retur, refund, dan klaim barang mengikuti kebijakan serta pusat bantuan platform tersebut.</p><p>Simpan bukti transaksi dan hubungi merchant/platform tempat pesanan dibuat. Jangan mengirimkan nomor kartu, kata sandi, OTP, atau data pembayaran sensitif melalui katalog ini.</p>' },
+        faq: { title: 'FAQ & Bantuan', body: '<p><strong>Apakah saya membeli langsung dari katalog ini?</strong><br>Periksa tujuan tautan produk. Jika tautan membuka platform merchant, transaksi diselesaikan di platform tersebut.</p><p><strong>Apakah harga dan stok selalu sama?</strong><br>Tidak selalu. Konfirmasikan harga, stok, variasi, dan biaya pengiriman pada halaman merchant sebelum membeli.</p><p><strong>Bagaimana jika ada masalah pesanan?</strong><br>Hubungi pusat bantuan merchant tempat transaksi dibuat dan siapkan bukti pesanan.</p>' },
+        contact: { title: 'Kontak & Pengaduan', body: '<p>Saluran kontak resmi belum dikonfigurasi di file katalog ini, jadi kami tidak menampilkan alamat email atau nomor telepon yang belum diverifikasi.</p><p>Sebelum peluncuran publik, tambahkan kontak resmi yang aktif dan prosedur pengaduan. Untuk masalah pesanan merchant, gunakan pusat bantuan platform tempat transaksi dilakukan.</p>' }
+    };
+    window.openFooterInfo = function(key) {
+        const item = info[key]; if (!item) return;
+        document.getElementById('footerInfoTitle').textContent = item.title;
+        document.getElementById('footerInfoBody').innerHTML = item.body;
+        const modal = document.getElementById('footerInfoModal');
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        document.body.style.overflow = 'hidden';
+    };
+    window.closeFooterInfo = function() {
+        const modal = document.getElementById('footerInfoModal');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        document.body.style.overflow = '';
+    };
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') window.closeFooterInfo(); });
+    document.getElementById('footerInfoModal')?.addEventListener('click', e => { if (e.target.id === 'footerInfoModal') window.closeFooterInfo(); });
+})();
+</script>
+
+<script>
+(function () {
+    'use strict';
+    const PROFILE_KEY = 'SYAILENDRA_PROFILE_V1';
+    const menuBtn = document.getElementById('accountMenuBtn');
+    const menu = document.getElementById('accountMenu');
+    const modal = document.getElementById('accountModal');
+    const title = document.getElementById('accountModalTitle');
+    const content = document.getElementById('accountModalContent');
+    const headerAvatar = document.getElementById('accountHeaderAvatar');
+    const defaultIcon = document.getElementById('accountDefaultIcon');
+    let currentView = 'my';
+    function loadProfile() {
+        try { const p = JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null'); return p && typeof p === 'object' ? p : null; }
+        catch (_) { return null; }
+    }
+    function saveProfile(profile) {
+        try { localStorage.setItem(PROFILE_KEY, JSON.stringify(profile)); return true; }
+        catch (_) { alert('Profil tidak dapat disimpan. Gambar mungkin terlalu besar; coba gambar yang lebih kecil.'); return false; }
+    }
+    function syncAvatar() {
+        const p = loadProfile();
+        if (p && p.avatar) { headerAvatar.src = p.avatar; headerAvatar.hidden = false; defaultIcon.hidden = true; }
+        else { headerAvatar.hidden = true; defaultIcon.hidden = false; }
+        menuBtn.title = p && p.name ? p.name : 'Akun Saya';
+    }
+    function showMenu(show) {
+        menu.hidden = !show;
+        menuBtn.setAttribute('aria-expanded', show ? 'true' : 'false');
+    }
+    function openView(view) {
+        currentView = view;
+        showMenu(false);
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        const p = loadProfile();
+        if (view === 'my') {
+            title.textContent = 'Akun Saya';
+            content.innerHTML = `
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-24 h-24 rounded-full border-2 border-amber-400 bg-slate-100 overflow-hidden flex items-center justify-center mb-3">
+                        ${p && p.avatar ? `<img src="${p.avatar}" alt="Foto profil" class="w-full h-full object-cover">` : '<i class="fa-solid fa-user text-3xl text-slate-400"></i>'}
+                    </div>
+                    <h3 class="text-lg font-black text-slate-900">${escapeHtml(p && p.name || 'Pengunjung Syailendra')}</h3>
+                    <p class="text-sm text-slate-500 mt-1">${escapeHtml(p && p.email || 'Profil belum didaftarkan')}</p>
+                </div>
+                <div class="mt-5 rounded-xl bg-amber-50 border border-amber-200 p-3 text-sm text-amber-900">Foto profil akan tampil pada ikon akun di header setelah disimpan.</div>
+                <label class="block mt-4 text-sm font-bold text-slate-700">Foto profil
+                    <input id="accountAvatarInput" type="file" accept="image/*" class="account-field">
+                </label>
+                <div class="flex justify-end gap-2 mt-4"><button type="button" class="account-secondary" id="accountCloseInner">Tutup</button><button type="button" class="account-action" id="accountSaveAvatar">Simpan Foto</button></div>
+                <p class="text-xs text-slate-500 mt-4">Profil dan foto disimpan di browser/perangkat ini. Belum tersinkron ke server atau akun lintas perangkat.</p>`;
+            document.getElementById('accountCloseInner').onclick = closeModal;
+            document.getElementById('accountSaveAvatar').onclick = saveAvatar;
+        } else if (view === 'register') {
+            title.textContent = 'Pendaftaran';
+            content.innerHTML = `
+                <form id="accountRegisterForm" class="space-y-3">
+                    <label class="block text-sm font-bold">Nama lengkap<input class="account-field" name="name" required maxlength="80" autocomplete="name" placeholder="Nama Anda"></label>
+                    <label class="block text-sm font-bold">Email<input class="account-field" name="email" required type="email" maxlength="160" autocomplete="email" placeholder="nama@email.com"></label>
+                    <label class="block text-sm font-bold">Foto profil (opsional)<input class="account-field" name="avatar" type="file" accept="image/*"></label>
+                    <p class="text-xs text-slate-500">Formulir ini menyiapkan profil lokal. Pendaftaran akun yang aman memerlukan backend; kata sandi tidak akan disimpan oleh halaman ini.</p>
+                    <div id="accountFormMessage" class="text-sm font-semibold" role="status"></div>
+                    <div class="flex justify-end gap-2"><button type="button" class="account-secondary" id="accountCancelRegister">Batal</button><button class="account-action" type="submit">Simpan Profil</button></div>
+                </form>`;
+            document.getElementById('accountCancelRegister').onclick = closeModal;
+            document.getElementById('accountRegisterForm').onsubmit = registerProfile;
+        } else if (view === 'login') {
+            title.textContent = 'Masuk / Login';
+            content.innerHTML = `<div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Fitur login sedang dalam pemrosesan.</strong><p class="mt-2">Login belum diaktifkan karena Toko Syailendra belum terhubung ke server autentikasi. Ini mencegah kata sandi disimpan secara tidak aman di browser.</p></div><div class="mt-4 flex justify-end"><button type="button" class="account-action" id="accountLoginOk">Mengerti</button></div>`;
+            document.getElementById('accountLoginOk').onclick = closeModal;
+        } else if (view === 'password') {
+            title.textContent = 'Ganti Password';
+            content.innerHTML = `<div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Ganti password sedang dalam pemrosesan.</strong><p class="mt-2">Fitur ini baru dapat diaktifkan setelah sistem akun terhubung ke backend dan verifikasi identitas tersedia. Jangan masukkan kata sandi ke formulir lokal yang belum aman.</p></div><div class="mt-4 flex justify-end"><button type="button" class="account-action" id="accountPasswordOk">Mengerti</button></div>`;
+            document.getElementById('accountPasswordOk').onclick = closeModal;
+        }
+    }
+    function escapeHtml(value) {
+        return String(value == null ? '' : value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+    function registerProfile(event) {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const name = form.elements.name.value.trim();
+        const email = form.elements.email.value.trim().toLowerCase();
+        const file = form.elements.avatar.files && form.elements.avatar.files[0];
+        const message = document.getElementById('accountFormMessage');
+        const finish = avatar => {
+            const old = loadProfile();
+            const profile = { name, email, avatar: avatar || (old && old.email === email ? old.avatar : '') };
+            if (!saveProfile(profile)) return;
+            syncAvatar();
+            message.textContent = 'Profil berhasil disimpan di browser ini. Login dan pendaftaran server belum aktif.';
+            message.className = 'text-sm font-semibold text-emerald-700';
+            setTimeout(() => { if (!modal.hidden) openView('my'); }, 900);
+        };
+        if (file) {
+            if (!file.type.startsWith('image/')) { message.textContent = 'Pilih file gambar yang valid.'; message.className = 'text-sm font-semibold text-red-600'; return; }
+            if (file.size > 2 * 1024 * 1024) { message.textContent = 'Ukuran foto maksimal 2 MB.'; message.className = 'text-sm font-semibold text-red-600'; return; }
+            const reader = new FileReader(); reader.onload = () => finish(String(reader.result || '')); reader.onerror = () => { message.textContent = 'Foto gagal dibaca.'; }; reader.readAsDataURL(file);
+        } else finish('');
+    }
+    function saveAvatar() {
+        const input = document.getElementById('accountAvatarInput');
+        const file = input && input.files && input.files[0];
+        if (!file) { alert('Pilih foto profil terlebih dahulu.'); return; }
+        if (!file.type.startsWith('image/')) { alert('Pilih file gambar yang valid.'); return; }
+        if (file.size > 2 * 1024 * 1024) { alert('Ukuran foto maksimal 2 MB.'); return; }
+        const reader = new FileReader();
+        reader.onload = () => {
+            const old = loadProfile() || { name: '', email: '' };
+            old.avatar = String(reader.result || '');
+            if (saveProfile(old)) { syncAvatar(); openView('my'); }
+        };
+        reader.onerror = () => alert('Foto gagal dibaca. Coba file lain.');
+        reader.readAsDataURL(file);
+    }
+    function closeModal() { modal.hidden = true; document.body.style.overflow = ''; }
+    menuBtn.addEventListener('click', () => showMenu(menu.hidden));
+    menu.querySelectorAll('[data-account-view]').forEach(button => button.addEventListener('click', () => openView(button.dataset.accountView)));
+    document.addEventListener('click', event => { if (!event.target.closest('.account-wrap')) showMenu(false); });
+    document.getElementById('accountModalClose').addEventListener('click', closeModal);
+    modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') { closeModal(); showMenu(false); } });
+    syncAvatar();
+})();
+</script>
+
+</body>
+</html>
